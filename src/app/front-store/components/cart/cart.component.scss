@@ -1,0 +1,18 @@
+.container {
+    min-height: calc(100vh - 319px);
+    margin-top: 20px;
+}
+
+.clearCart {
+    margin-top: -6px;
+    padding-left: 3px;
+    i {
+        margin: 3px;
+    }    
+}
+
+@media (max-width: 768px) {
+    .container{
+        min-height: calc(100vh - 240px);
+    }
+}

@@ -1,0 +1,149 @@
+<h3 class="text-center">Products</h3>
+
+<p-dataTable [value]="products" class="product-table" [(selection)]="selectedProduct" [paginator]="true" rows="15" [responsive]="true">
+    <p-header class="clearfix">
+        <div class="col-xs-offset-2 col-xs-8 pheadtext">Products</div>
+        <div class="col-xs-2"><button type="button" (click)="showDialogToAdd()" class="btn btn-primary pull-right"><i class="fa fa-plus" aria-hidden="true"></i>New product</button></div>
+    </p-header>
+    <p-column field="image" header="image"><ng-template let-file="rowData" pTemplate type="body"><img src="{{url}}{{file.image}}" class="img-responsive" width="150"></ng-template></p-column>
+    <p-column field="title" header="name" [sortable]="true"></p-column>
+    <p-column field="price" header="price" [sortable]="true">
+        <ng-template pTemplate type="body" let-product="rowData">
+            {{ product.price/100 | currency:'EUR':'symbol':'1.2-2' }}
+        </ng-template>
+    </p-column>
+    <p-column field="discount" header="discount" [sortable]="true">
+        <ng-template pTemplate type="body" let-product="rowData">
+            {{ product.discount }}%
+        </ng-template>
+    </p-column>
+    <p-column field="afterDiscount" header="after Discount" [sortable]="true">
+        <ng-template pTemplate type="body" let-product="rowData">
+            {{ cartService.getDiscountPrice(product)/100 | currency:'EUR':'symbol':'1.2-2' }}
+        </ng-template>
+    </p-column>
+    <p-column field="afterDiscount" header="#">
+        <ng-template pTemplate type="body" let-product="rowData" let-event="$event">
+            <button type="button" (click)="onRowSelect(product)" class="btn btn-sm btn-primary col-md-6 col-sm-12 sbutton"><i class="fa fa-pencil" aria-hidden="true"></i>Edit</button>
+            <button type="button" (click)="deleteProduct(product)" class="btn btn-sm btn-danger col-md-6 col-sm-12 sbutton"><i class="fa fa-trash" aria-hidden="true"></i>Delete</button>
+        </ng-template>
+    </p-column>
+</p-dataTable>
+
+<p-dialog header="Product Details" [(visible)]="displayNewDialog" [responsive]="true" showEffect="fade" [modal]="true">
+    <div class="ui-grid ui-grid-responsive ui-fluid" *ngIf="product">
+        <form (ngSubmit)="onSubmit(f)" #f="ngForm">
+            <div class="form-group" [class.has-error]="errors?.title">
+                <label for="title">Name</label>
+                <input type="text" name="title" id="title" class="form-control" ngModel required autofocus>
+                <span class="help-block" *ngIf="errors?.title">
+                    <strong>{{ errors.title }}</strong>
+                </span>
+            </div>
+            <div class="form-group" [class.has-error]="errors?.category">
+                <label for="category">Category</label>
+                <select class="form-control" name="category" ngModel>
+                    <option *ngFor="let category of categories" value="{{ category.name }}">{{ category.name }}</option>
+                </select>
+                <span class="help-block" *ngIf="errors?.category">
+                    <strong>{{ errors.category }}</strong>
+                </span>
+            </div>
+            <div class="form-group" [class.has-error]="errors?.image">
+                <label for="image">Image</label>
+                <input type="file" id="image" #fileInput name="image" class="form-control" ngModel required>
+                <span class="help-block" *ngIf="errors?.image">
+                    <strong>{{ errors.image }}</strong>
+                </span>
+            </div>
+            <div class="form-group col-md-6 price" [class.has-error]="errors?.price">
+                <label for="price">Price</label>
+                <input type="text" id="price" name="price" class="form-control" ngModel required>
+                <span class="help-block" *ngIf="errors?.price">
+                    <strong>{{ errors.price }}</strong>
+                </span>
+            </div>
+            <div class="form-group col-md-6" [class.has-error]="errors?.discount">
+                <label for="discount">Discount</label>
+                <input type="text" id="discount" name="discount" class="form-control" ngModel required>
+                <span class="help-block" *ngIf="errors?.discount">
+                    <strong>{{ errors.discount }}</strong>
+                </span>
+            </div>
+            <div class="form-group description" [class.has-error]="errors?.description">
+                <label for="description">Description</label>
+                <textarea id="description" name="description" class="form-control" ngModel required></textarea>
+                <span class="help-block" *ngIf="errors?.description">
+                    <strong>{{ errors.description }}</strong>
+                </span>
+            </div>
+
+            <button type="button" class="btn btn-primary btn-lg pull-right" (click)="back()">Back</button>
+            <button type="submit" class="btn btn-success btn-lg pull-right">Create</button>
+
+        </form>
+    </div>
+
+</p-dialog>
+
+<p-dialog header="Edit Product" [(visible)]="displayEditDialog" [responsive]="true" showEffect="fade" [modal]="true">
+    <div class="ui-grid ui-grid-responsive ui-fluid" *ngIf="product">
+        <form (ngSubmit)="onEditSubmit(e)" #e="ngForm">
+            <div class="form-group" [class.has-error]="errors?.title">
+                <label for="title">Name</label>
+                <input type="text" name="title" id="title" class="form-control" [(ngModel)]="product.title" required autofocus>
+                <span class="help-block" *ngIf="errors?.title">
+                    <strong>{{ errors.title }}</strong>
+                </span>
+            </div>
+            <div class="form-group" [class.has-error]="errors?.category">
+                <label for="category">Category</label>
+                <select class="form-control" name="category" [(ngModel)]="product.category">
+                    <option *ngFor="let category of categories" value="{{ category.name }}">{{ category.name }}</option>
+                </select>
+                <span class="help-block" *ngIf="errors?.category">
+                    <strong>{{ errors.category }}</strong>
+                </span>
+            </div>
+            <div class="form-group" [class.has-error]="errors?.image">
+                <label for="image">Image</label>
+                <input type="file" id="image" #editFileInput name="image" class="form-control" ngModel required>
+                <span class="help-block" *ngIf="errors?.image">
+                    <strong>{{ errors.image }}</strong>
+                </span>
+            </div>
+            <div class="form-group col-md-6" [class.has-error]="errors?.price">
+                <label for="price">Price</label>
+                <input type="text" id="price" name="price" class="form-control" [ngModel]="product.price/100" (input)="product.price=$event.target.value*100" required>
+                <span class="help-block" *ngIf="errors?.price">
+                    <strong>{{ errors.price }}</strong>
+                </span>
+            </div>
+            <div class="form-group col-md-6" [class.has-error]="errors?.discount">
+                <label for="discount">Discount</label>
+                <input type="text" id="discount" name="discount" class="form-control" [(ngModel)]="product.discount" required>
+                <span class="help-block" *ngIf="errors?.discount">
+                    <strong>{{ errors.discount }}</strong>
+                </span>
+            </div>
+            <div class="form-group" [class.has-error]="errors?.description">
+                <label for="description">Description</label>
+                <textarea id="description" name="description" class="form-control" [(ngModel)]="product.description" required></textarea>
+                <span class="help-block" *ngIf="errors?.description">
+                    <strong>{{ errors.description }}</strong>
+                </span>
+            </div>
+
+            <button type="button" class="btn btn-primary btn-lg pull-right" (click)="back()">Back</button>
+            <button type="submit" class="btn btn-success btn-lg pull-right">Update</button>
+
+        </form>
+    </div>
+
+</p-dialog>
+
+<p-confirmDialog></p-confirmDialog>
+
+<p-growl [value]="msgs"></p-growl>
+
+<app-loader [loading]="loading"></app-loader>

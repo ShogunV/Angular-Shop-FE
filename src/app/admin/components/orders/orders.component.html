@@ -1,0 +1,42 @@
+<h3 class="text-center">Orders</h3>
+
+<p-accordion [multiple]="true">
+    <p-accordionTab *ngFor="let order of orders">
+        <p-header>
+            <!-- {{order.user}}   {{order.created_at | date:'dd/M/y H:mm:ss'}} -->
+            <!-- {{order.user}}   {{order.created_at}} -->
+            <span *ngIf="!ie; else elseBlock">{{order.user}} &nbsp;&nbsp; - &nbsp; {{order.created_at | date:'H:mm dd/M/y'}}</span>
+            <ng-template #elseBlock>{{order.user}} &nbsp;&nbsp; - &nbsp; {{order.created_at}}</ng-template>
+            <span class="pull-right">{{order.order.total/100 | currency:'EUR':'symbol':'1.2-2'}}</span>
+        </p-header>
+        <table class="table table-striped">
+            <tr>
+              <th>#</th>
+              <th>Product</th>
+              <th>Quantity</th>
+              <th>Before Discount</th>
+              <th>Discount</th>
+              <th>After Discount</th>
+              <th>Price</th>
+            </tr>
+            
+            <tr *ngFor="let item of order['orderItems']">
+              <td></td>
+              <td>{{ item['title'] }}</td>
+              <td>{{ item['quantity'] }}</td>
+              <td>{{ item['price']/100 | currency:'EUR':'symbol':'1.2-2' }}</td>
+              <td>{{ item['discount'] }}%</td>
+              <td>{{ cartService.getDiscountPrice(item)/100 | currency:'EUR':'symbol':'1.2-2' }}</td>
+              <td>{{ cartService.getProductsPrice(item)/100 | currency:'EUR':'symbol':'1.2-2' }}</td>
+            </tr>
+           
+            <tr>
+              <td colspan="6">Total Price</td>
+              <td>{{ order['order'].total/100 | currency:'EUR':'symbol':'1.2-2' }}</td>
+            </tr>
+        </table>    
+    </p-accordionTab>
+
+</p-accordion>
+
+<app-loader [loading]="loading"></app-loader>

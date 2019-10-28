@@ -1,0 +1,67 @@
+<h3 class="text-center">Categories</h3>
+
+<p-dataTable [value]="categories" class="product-table" [paginator]="true" rows="15" [responsive]="true">
+    <p-header class="clearfix">
+      <div class="col-xs-offset-2 col-xs-8 pheadtext">Categories</div>
+      <div class="col-xs-2"><button type="button" (click)="showDialogToAdd()" class="btn btn-primary pull-right"><i class="fa fa-plus" aria-hidden="true"></i>New category</button></div>
+    </p-header>
+    <p-column field="name" header="Category" [sortable]="true"></p-column>
+    <p-column field="quantity" header="Total items sold" [sortable]="true">
+      <ng-template pTemplate type="body" let-category="rowData">
+        {{ category.quantity || 0 }}
+      </ng-template>
+    </p-column>
+    <p-column field="total" header="Total money" [sortable]="true">
+      <ng-template pTemplate type="body" let-category="rowData">
+        {{ category.total/100 || 0 | currency:'EUR':'symbol':'1.2-2' }}
+      </ng-template>
+    </p-column>
+    <p-column field="#" header="#">
+      <ng-template pTemplate type="body" let-category="rowData" let-event="$event">
+          <button type="button" (click)="showDialogToEdit(category)" class="btn btn-sm btn-primary edbutton"><i class="fa fa-pencil" aria-hidden="true"></i>Edit</button>
+          <button type="button" (click)="deleteCategory(category)" class="btn btn-sm btn-danger edbutton"><i class="fa fa-trash" aria-hidden="true"></i>Delete</button>
+      </ng-template>
+    </p-column>
+  </p-dataTable>
+
+<p-dialog header="Category Details" [(visible)]="displayNewDialog" [responsive]="true" showEffect="fade" [modal]="true">
+  <div class="ui-grid ui-grid-responsive ui-fluid" *ngIf="category">
+      <form (ngSubmit)="onSubmit(f)" #f="ngForm">
+          <div class="form-group" [class.has-error]="errors?.name">
+              <label for="name">Name</label>
+              <input type="text" name="name" id="name" class="form-control" ngModel required autofocus>
+              <span class="help-block" *ngIf="errors?.name">
+                <strong>{{ errors.name }}</strong>
+              </span>
+          </div>
+          
+          <button type="button" class="btn btn-primary btn-lg pull-right" (click)="back()">Back</button>
+          <button type="submit" class="btn btn-success btn-lg pull-right">Create</button>
+
+      </form>
+  </div>
+</p-dialog>
+
+<p-dialog header="Edit Category" [(visible)]="displayEditDialog" [responsive]="true" showEffect="fade" [modal]="true">
+  <div class="ui-grid ui-grid-responsive ui-fluid" *ngIf="category">
+      <form (ngSubmit)="onEditSubmit(e)" #e="ngForm">
+          <div class="form-group" [class.has-error]="errors?.name">
+              <label for="name">Name</label>
+              <input type="text" name="name" id="name" class="form-control" [(ngModel)]="category.name" required autofocus>
+              <span class="help-block" *ngIf="errors?.name">
+                <strong>{{ errors.name }}</strong>
+              </span>
+          </div>
+          
+          <button type="button" class="btn btn-primary btn-lg pull-right" (click)="back()">Back</button>
+          <button type="submit" class="btn btn-success btn-lg pull-right">Create</button>
+
+      </form>
+  </div>
+</p-dialog>
+
+<p-confirmDialog></p-confirmDialog>
+
+<p-growl [value]="msgs"></p-growl>
+
+<app-loader [loading]="loading"></app-loader>

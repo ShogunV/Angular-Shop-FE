@@ -1,0 +1,68 @@
+<div class="container">
+  <div class="row">
+    <div class="col-md-8 col-md-offset-2">
+      <div class="panel panel-default">
+        <div class="panel-heading">Register</div>
+        <div class="panel-body">
+          <form class="form-horizontal" (ngSubmit)="onSubmit(f)" #f="ngForm">
+            
+            <div class="form-group" [class.has-error]="errors?.name">
+              <label for="name" class="col-md-4 control-label">Name</label>
+              
+              <div class="col-md-6">
+                <input id="name" type="text" class="form-control" name="name" placeholder="Enter username..." ngModel required autofocus>
+                
+                <span class="help-block" *ngIf="errors?.name">
+                  <strong *ngFor="let error of errors.name">{{ errors }}</strong>
+                </span>
+              </div>
+            </div>
+            
+            <div class="form-group" [class.has-error]="errors?.email">
+              <label for="email" class="col-md-4 control-label">E-Mail Address</label>
+              
+              <div class="col-md-6">
+                <input id="email" type="email" class="form-control" name="email" placeholder="Enter fake email..." ngModel required>
+                
+                <span class="help-block" *ngIf="errors?.email">
+                  <strong *ngFor="let error of errors.email">{{ error }}</strong>
+                </span>
+              </div>
+            </div>
+            
+            <div class="form-group" [class.has-error]="errors?.password">
+              <label for="password" class="col-md-4 control-label">Password</label>
+              
+              <div class="col-md-6">
+                <input id="password" type="password" class="form-control" name="password" placeholder="Enter password..." ngModel required>
+                
+                <span class="help-block" *ngIf="errors?.password">
+                  <strong *ngFor="let error of errors.password">{{ error }}</strong>
+                </span>
+              </div>
+            </div>
+            
+            <div class="form-group">
+              <label for="password-confirm" class="col-md-4 control-label">Confirm Password</label>
+              
+              <div class="col-md-6">
+                <input id="password-confirm" type="password" class="form-control" name="password_confirmation" placeholder="Confirm password..." ngModel required>
+              </div>
+            </div>
+            
+            <div class="form-group">
+              <div class="col-md-6 col-md-offset-4">
+                <button type="submit" class="btn btn-primary" [disabled]="!f.valid">
+                  Register
+                </button>
+                <button type="button" class="btn btn-default" (click)="goBack()">
+                  Back
+                </button>
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

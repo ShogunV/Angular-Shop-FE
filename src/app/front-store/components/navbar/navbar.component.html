@@ -1,0 +1,60 @@
+<div class="logo-container">
+  <h1 class="text-center logo"><a routerLink="">Larbonne</a></h1>
+  <hr/>
+</div>
+<nav class="navbar navbar-default navbar-static-top">
+  <div class="container">
+    <div class="navbar-header">
+      
+      <!-- Collapsed Hamburger -->
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#app-navbar-collapse">
+        <span class="sr-only">Toggle Navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      
+      <!-- Branding Image -->
+      <!-- <a class="navbar-brand" routerLink="" routerLinkActive="active" (click)="categoryService.changeCategory()">
+        Angular4Laravel
+      </a> -->
+      
+    </div>
+    
+    <div class="collapse navbar-collapse" id="app-navbar-collapse">
+      <!-- Left Side Of Navbar -->
+      <ul class="nav navbar-nav">
+        <li>
+          <a routerLink="/" routerLinkActive="active" [routerLinkActiveOptions]="{exact:true}">
+            Home
+          </a>
+        </li>
+        &nbsp;
+        <li *ngFor="let category of categoryService.categories"><a [routerLink]="['/category', category.name | lowercase]" name="category" routerLinkActive="active" ([ngModel])="category.name" [routerLinkActiveOptions]="{exact:true}" (click)="categoryService.changeCategory(category.name)">{{category.name}}</a></li>
+      </ul>
+      
+      <!-- Right Side Of Navbar -->
+      <ul class="nav navbar-nav navbar-right">
+        <!-- Authentication Links -->
+        <!-- if guest -->
+        <li><a routerLink="/shopping-cart" routerLinkActive="active"><i class="fa fa-shopping-cart" aria-hidden="true"></i><span class="glyphicon glyphicon-shopping-cart"></span>{{cartService.getTotalQuantity()}}</a></li>
+        <li *ngIf="!authService.isLoggedIn()"><a routerLink="/login" routerLinkActive="active">Login</a></li>
+        <li *ngIf="!authService.isLoggedIn()"><a routerLink="/register" routerLinkActive="active">Register</a></li>
+        <!-- else -->
+        <li class="dropdown" *ngIf="authService.isLoggedIn()">
+          <a class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+            {{ authService.getUsername() }} <span class="caret"></span>
+          </a>
+          
+          <ul class="dropdown-menu" role="menu">
+            <li *ngIf="authService.isLoggedIn() && authService.isAdmin()"><a routerLink="/admin" routerLinkActive="active">Dashboard</a></li>
+            <li>
+              <a routerLink="" (click)="onLogout()" class="dropdown-item">Logout</a>
+            </li>
+          </ul>
+        </li>
+     
+      </ul>
+    </div>
+  </div>
+</nav>

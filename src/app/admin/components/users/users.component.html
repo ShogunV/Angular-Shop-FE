@@ -1,0 +1,24 @@
+<h3 class="text-center">Users</h3>
+
+<p-dataTable [value]="users" class="product-table" [paginator]="true" rows="15" [responsive]="true">
+  <p-header>Users</p-header>
+  <p-column field="name" header="Name" [sortable]="true"></p-column>
+  <p-column field="email" header="Email" [sortable]="true"></p-column>
+  <p-column field="totalOrders" header="Total orders" [sortable]="true">
+    <ng-template pTemplate type="body" let-user="rowData">
+      {{ user.totalOrders || 0 }}
+    </ng-template>
+  </p-column>
+  <p-column field="totalItems" header="Total items bought" [sortable]="true">
+    <ng-template pTemplate type="body" let-user="rowData">
+      {{ user.totalItems || 0 }}
+    </ng-template>
+  </p-column>
+  <p-column field="totalDineros" header="Total money spent" [sortable]="true">
+      <ng-template pTemplate type="body" let-user="rowData">
+          {{ user.totalDineros/100 || 0 | currency:'EUR':'symbol':'1.2-2' }}
+      </ng-template>
+  </p-column>
+</p-dataTable>
+
+<app-loader [loading]="loading"></app-loader>
