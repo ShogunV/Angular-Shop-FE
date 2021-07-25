@@ -1,22 +1,22 @@
 import { Component, OnInit } from '@angular/core';
-import { Message } from 'primeng/components/common/api';
-
 import { Product } from '../../models/Product.model';
 import { CartService } from '../../services/cart.service';
 import { AuthService } from '../../services/auth.service';
+import { CartProduct } from 'src/app/admin/components/orders/orders.component';
 
 @Component({
   selector: 'app-cart',
   templateUrl: './cart.component.html',
-  styleUrls: ['./cart.component.scss']
+  styleUrls: ['./cart.component.scss'],
 })
-
 export class CartComponent implements OnInit {
-  private products: Product[] = [];
-  msgs: Message[] = [];
+  private products: CartProduct[] = [];
   loading = false;
 
-  constructor(public cartService: CartService, private authService: AuthService) { }
+  constructor(
+    public cartService: CartService,
+    private authService: AuthService
+  ) {}
 
   ngOnInit() {
     this.products = this.cartService.getProducts();
@@ -27,7 +27,7 @@ export class CartComponent implements OnInit {
     this.cartService.addProduct(product);
   }
 
-  removeOneFromCart(product: Product) {
+  removeOneFromCart(product: CartProduct) {
     this.cartService.deleteOneProduct(product);
     this.products = this.cartService.getProducts();
   }
@@ -45,6 +45,4 @@ export class CartComponent implements OnInit {
   onCheckout() {
     this.cartService.checkout();
   }
-
 }
-

@@ -1,51 +1,54 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { NgForm } from '@angular/forms';
-import 'rxjs/add/operator/first';
+import { first } from 'rxjs/operators';
 
 import { AuthService } from '../../services/auth.service';
+import { User } from 'src/app/admin/components/users/users.component';
+
+export interface LoginResponse {
+  complete: boolean;
+  token: string;
+  user: User;
+}
 
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
-  styleUrls: ['./login.component.scss']
+  styleUrls: ['./login.component.scss'],
 })
 export class LoginComponent implements OnInit {
-  errors;
-  login;
+  errors: any = [];
+  // login;
   private alive = true;
 
-  constructor(private authService: AuthService, private router: Router) { }
+  constructor(private authService: AuthService, private router: Router) {}
 
-  ngOnInit() {
-  }
+  ngOnInit() {}
 
   onLogin(form: NgForm) {
-    this.authService.login(
-      form.value.email,
-      form.value.password
-    ).first().subscribe(response => {
-      // localStorage.setItem('token', response['token']);
-      // localStorage.setItem('username', response['username']);
-      // localStorage.setItem('email', response['email']);
-      localStorage['token'] = response['token'];
-      localStorage['username'] = response['username'];
-      localStorage['email'] = response['email'];
-      if (response['admin']) {
-        // this.authService.isAdmin = response['admin'];
-        localStorage['admin'] = response['admin'];
-        this.router.navigate(['admin']);
-      } else {
-        this.router.navigate(['']);
-      }
-    },
-      response => {
-        this.errors = response.error;
-      }
-    );
+    this.authService
+      .login(form.value.email, form.value.password)
+      .pipe(first())
+      .subscribe(
+        (response: LoginResponse) => {
+          localStorage.setItem('token', response['token']);
+          localStorage.setItem('username', response['user'].name);
+          localStorage.setItem('email', response['user'].email);
+          if (response['user'].role === 'admin') {
+            localStorage.setItem('admin', 'true')
+            this.router.navigate(['admin']);
+          } else {
+            this.router.navigate(['']);
+          }
+        },
+        (response) => {
+          this.errors = response.error;
+        }
+      );
   }
 
-  goBack () {
+  goBack() {
     this.router.navigate(['']);
   }
 }

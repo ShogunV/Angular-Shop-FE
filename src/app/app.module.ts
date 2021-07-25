@@ -1,4 +1,7 @@
 import { BrowserModule } from '@angular/platform-browser';
+import { CommonModule } from '@angular/common';
+import { NoopAnimationsModule } from '@angular/platform-browser/animations';
+import { HttpClientModule } from '@angular/common/http';
 import { NgModule } from '@angular/core';
 
 import { AppRoutingModule } from './app-routing.module';
@@ -9,17 +12,18 @@ import { AdminModule } from './admin/admin.module';
 import { LoaderModule } from './loader/loader.module';
 
 @NgModule({
-  declarations: [
-    AppComponent
-  ],
+  declarations: [AppComponent],
   imports: [
     BrowserModule,
+    CommonModule,
+    NoopAnimationsModule,
+    HttpClientModule,
     AppRoutingModule,
     FrontStoreModule,
     AdminModule,
-    LoaderModule
+    LoaderModule,
   ],
   providers: [],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
 })
-export class AppModule { }
+export class AppModule {}

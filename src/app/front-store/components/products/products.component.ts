@@ -6,23 +6,26 @@ import { Product } from '../../models/Product.model';
 import { ProductService } from '../../services/product.service';
 import { CartService } from '../../services/cart.service';
 import { CategoryService } from '../../services/category.service';
-import { CategoryPipe } from '../../pipes/category.pipe';
-import { SearchPipe } from '../../pipes/search.pipe';
+import { Category } from 'src/app/admin/components/categories/categories.component';
+import { CartProduct } from 'src/app/admin/components/orders/orders.component';
 
 @Component({
   selector: 'app-products',
   templateUrl: './products.component.html',
-  styleUrls: ['./products.component.scss']
+  styleUrls: ['./products.component.scss'],
 })
-
 export class ProductsComponent implements OnInit, DoCheck {
-  products;
-  category;
-  searchText;
+  products: Product[] | null = [];
+  category: Category | null = null;
+  searchText: string = '';
   url = environment.url;
 
-  constructor(public productService: ProductService, private cartService: CartService,
-    public categoryService: CategoryService, private route: ActivatedRoute) { }
+  constructor(
+    public productService: ProductService,
+    public cartService: CartService,
+    public categoryService: CategoryService,
+    private route: ActivatedRoute
+  ) {}
 
   ngOnInit() {
     this.productService.getProducts();
@@ -33,7 +36,7 @@ export class ProductsComponent implements OnInit, DoCheck {
   }
 
   addToCart(product: Product) {
-    this.cartService.addProduct(product);
+    const cartProduct: CartProduct = { ...product, quantity: 1 };
+    this.cartService.addProduct(cartProduct);
   }
-
 }

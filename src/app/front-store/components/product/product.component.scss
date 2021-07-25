@@ -1,18 +1,18 @@
 .container {
-    min-height: calc(100vh - 309px);
-    margin-top: 10px;
+  min-height: calc(100vh - 309px);
+  margin-top: 10px;
 }
 
 img {
-    width: 100%;
+  width: 100%;
 }
 
 .cart {
-    margin-bottom: 20px;
+  margin-bottom: 20px;
 }
 
 @media (max-width: 768px) {
-    .container{
-        min-height: calc(100vh - 230px);
-    }
+  .container {
+    min-height: calc(100vh - 230px);
+  }
 }

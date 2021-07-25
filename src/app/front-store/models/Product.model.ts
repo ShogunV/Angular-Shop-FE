@@ -1,8 +1,10 @@
-export class Product {
-    id: number;
-    title: string;
-    image: string;
-    price: number;
-    discount: number;
-    quantity: number;
-}
+export type Product = {
+  id: number;
+  title: string;
+  description: string;
+  image: File | string;
+  price: number;
+  discount: number;
+  category: string;
+  category_id: number;
+};

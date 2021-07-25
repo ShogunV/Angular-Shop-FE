@@ -1,28 +1,40 @@
 <div class="container">
   <div *ngFor="let product of productService.prods">
     <div class="col-sm-6">
-      <img src="{{url}}{{product.image}}">
+      <img src="{{ url }}{{ product.image }}" />
     </div>
     <div class="col-sm-6">
-      <h1>{{product.title}}</h1>
+      <h1>{{ product.title }}</h1>
       <label for="description">Description</label>
-      <p id="description">{{product.description}}</p>
+      <p id="description">{{ product.description }}</p>
       <label for="category">Category</label>
-      <p id="category">{{product.category}}</p>
+      <p id="category">{{ product.category }}</p>
       <div class="col-sm-4">
         <label for="price">Price</label>
-        <p id="price">{{product.price/100 | currency:'EUR':'symbol':'1.2-2' }}</p>
+        <p id="price">{{ product.price | currency: "EUR":"symbol":"1.2-2" }}</p>
       </div>
       <div class="col-sm-4">
         <label for="discount">Discount</label>
-        <p id="discount">{{product.discount}}%</p>
+        <p id="discount">{{ product.discount }}%</p>
       </div>
       <div class="col-sm-4">
         <label for="discountPrice">After discount</label>
-        <p id="discountPrice">{{cartService.getDiscountPrice(product)/100 | currency:'EUR':'symbol':'1.2-2'}}</p>
+        <p id="discountPrice">
+          {{
+            cartService.getDiscountPrice(product)
+              | currency: "EUR":"symbol":"1.2-2"
+          }}
+        </p>
       </div>
-      <button type="button" class="btn btn-success btn-lg cart" (click)="cartService.addProduct(product)"><i class="fa fa-shopping-cart" aria-hidden="true"></i><span class="glyphicon glyphicon-shopping-cart"></span>Add to cart</button>
-      <a routerLink="" class="btn btn-default btn-lg pull-right">Back</a>    
+      <button
+        type="button"
+        class="btn btn-success btn-lg cart"
+        (click)="cartService.addProduct(product)"
+      >
+        <i class="fa fa-shopping-cart" aria-hidden="true"></i
+        ><span class="glyphicon glyphicon-shopping-cart"></span>Add to cart
+      </button>
+      <a routerLink="" class="btn btn-default btn-lg pull-right">Back</a>
     </div>
   </div>
 </div>

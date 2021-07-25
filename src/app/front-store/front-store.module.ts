@@ -1,13 +1,10 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
-import { HttpClientModule } from '@angular/common/http';
-// import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { FormsModule } from '@angular/forms';
-import { GrowlModule } from 'primeng/components/growl/growl';
-import { ConfirmDialogModule } from 'primeng/components/confirmdialog/confirmdialog';
-import { ConfirmationService } from 'primeng/components/common/api';
+import { ToastModule } from 'primeng/toast';
+import { ConfirmDialogModule } from 'primeng/confirmdialog';
+import { ConfirmationService } from 'primeng/api';
 
 import { FrontStoreRoutingModule } from './front-store-routing.module';
 import { NavbarComponent } from './components/navbar/navbar.component';
@@ -31,12 +28,9 @@ import { LoaderModule } from '../loader/loader.module';
     CommonModule,
     FrontStoreRoutingModule,
     FormsModule,
-    HttpClientModule,
-    // BrowserAnimationsModule,
-    NoopAnimationsModule,
     LoaderModule,
-    GrowlModule,
-    ConfirmDialogModule
+    ToastModule,
+    ConfirmDialogModule,
   ],
   declarations: [
     NavbarComponent,
@@ -48,9 +42,15 @@ import { LoaderModule } from '../loader/loader.module';
     ProductsComponent,
     PageNotFoundComponent,
     CategoryPipe,
-    SearchPipe
+    SearchPipe,
   ],
-  providers: [CategoryService, AuthService, ProductService, CartService, ConfirmationService],
-  exports: [NavbarComponent, FooterComponent, RouterModule]
+  providers: [
+    CategoryService,
+    AuthService,
+    ProductService,
+    CartService,
+    ConfirmationService,
+  ],
+  exports: [NavbarComponent, FooterComponent, RouterModule],
 })
-export class FrontStoreModule { }
+export class FrontStoreModule {}

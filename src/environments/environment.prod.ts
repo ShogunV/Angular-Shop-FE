@@ -1,5 +1,5 @@
 export const environment = {
   production: true,
-  url: 'https://larbonne.000webhostapp.com/public/',
-  apiUrl: 'https://larbonne.000webhostapp.com/public/api/',
+  url: 'http://localhost:8000/',
+  apiUrl: 'http://localhost:8000/api/',
 };

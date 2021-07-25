@@ -1,58 +1,91 @@
 <div class="container">
-	<div *ngIf="cartService.cart.length > 0">
-		<div>
-		<h4 class="text-center">Cart
-		<button class="btn btn-sm btn-danger pull-right clearCart" (click)="removeAllFromCart()"><i class="fa fa-trash-o" aria-hidden="true"></i>Clear cart</button>
-		</h4></div>
-		<table class="table table-striped">
-			<tr>
-				<th>#</th>
-				<th>Product</th>
-				<th>Quantity</th>
-				<th>Before Discount</th>
-				<th>Discount</th>
-				<th>After Discount</th>
-				<th>Price</th>
-			</tr>
+  <div *ngIf="cartService.cart.length > 0">
+    <div>
+      <h4 class="text-center">
+        Cart
+        <button
+          class="btn btn-sm btn-danger pull-right clearCart"
+          (click)="removeAllFromCart()"
+        >
+          <i class="fa fa-trash-o" aria-hidden="true"></i>Clear cart
+        </button>
+      </h4>
+    </div>
+    <table class="table table-striped">
+      <tr>
+        <th>#</th>
+        <th>Product</th>
+        <th>Quantity</th>
+        <th>Before Discount</th>
+        <th>Discount</th>
+        <th>After Discount</th>
+        <th>Price</th>
+      </tr>
 
-			<tr *ngFor="let product of cartService.cart">
-				<td>#</td>
-				<td>{{ product.title }}</td>
-				<td>
-					<button class="btn btn-xs btn-default" (click)="addToCart(product)">+</button>
-					{{ product.quantity }}
-					<button class="btn btn-xs btn-default" (click)="removeOneFromCart(product)">-</button>
-					<button class="btn btn-xs btn-danger" (click)="removeFromCart(product)"><i class="fa fa-trash-o" aria-hidden="true"></i></button>
-				</td>
-				<td>{{ product.price/100 | currency:'EUR':'symbol':'1.2-2' }}</td>
-				<td>{{ product.discount }} %</td>
-				<td>{{ cartService.getDiscountPrice(product)/100 | currency:'EUR':'symbol':'1.2-2' }}</td>
-				<td>{{ cartService.getProductsPrice(product)/100 | currency:'EUR':'symbol':'1.2-2' }}</td>
-			</tr>
+      <tr *ngFor="let product of cartService.cart">
+        <td>#</td>
+        <td>{{ product.title }}</td>
+        <td>
+          <button class="btn btn-xs btn-default" (click)="addToCart(product)">
+            +
+          </button>
+          {{ product.quantity }}
+          <button
+            class="btn btn-xs btn-default"
+            (click)="removeOneFromCart(product)"
+          >
+            -
+          </button>
+          <button
+            class="btn btn-xs btn-danger"
+            (click)="removeFromCart(product)"
+          >
+            <i class="fa fa-trash-o" aria-hidden="true"></i>
+          </button>
+        </td>
+        <td>{{ product.price | currency: "EUR":"symbol":"1.2-2" }}</td>
+        <td>{{ product.discount }} %</td>
+        <td>
+          {{
+            cartService.getDiscountPrice(product)
+              | currency: "EUR":"symbol":"1.2-2"
+          }}
+        </td>
+        <td>
+          {{
+            cartService.getProductsPrice(product)
+              | currency: "EUR":"symbol":"1.2-2"
+          }}
+        </td>
+      </tr>
 
-			<tr>
-				<td colspan="6">Total Price</td>
-				<td>{{ cartService.getTotalPrice()/100 | currency:'EUR':'symbol':'1.2-2' }}</td>
-			</tr>
+      <tr>
+        <td colspan="6">Total Price</td>
+        <td>
+          {{ cartService.getTotalPrice() | currency: "EUR":"symbol":"1.2-2" }}
+        </td>
+      </tr>
+    </table>
 
-		</table>
+    <button class="btn btn-lg btn-success pull-right" (click)="onCheckout()">
+      Checkout
+    </button>
 
-		<button class="btn btn-lg btn-success pull-right" (click)="onCheckout()">Checkout</button>
+    <a class="btn btn-lg btn-default" routerLink="">Back</a>
+  </div>
 
+  <div *ngIf="cartService.cart.length === 0">
+    <h2 class="text-center">Your Cart is Empty!</h2>
 
-		<a class="btn btn-lg btn-default" routerLink="">Back</a>
-	</div>
-
-	<div *ngIf="cartService.cart.length <= 0">
-		<h2 class="text-center">Your Cart is Empty!</h2>
-
-		<a class="btn btn-lg btn-default" routerLink="">Back</a>
-	</div>
+    <a class="btn btn-lg btn-default" routerLink="">Back</a>
+  </div>
 </div>
 
-<p-confirmDialog header="Confirmation" icon="fa fa-question-circle" acceptLabel="OK" rejectLabel="Back"></p-confirmDialog>
-
-<p-growl [(value)]="cartService.msgs"></p-growl>
+<p-confirmDialog
+  header="Confirmation"
+  icon="fa fa-question-circle"
+  acceptLabel="OK"
+  rejectLabel="Back"
+></p-confirmDialog>
 
 <app-loader [loading]="cartService.loading"></app-loader>
-

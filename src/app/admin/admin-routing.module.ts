@@ -10,25 +10,21 @@ import { AdminGuard } from './guards/admin.guard';
 
 const routes: Routes = [
   {
-    path: 'admin', component: HomeComponent, canActivate: [AdminGuard],
+    path: '',
+    component: HomeComponent,
+    canActivate: [AdminGuard],
     children: [
       { path: 'products', component: ProductsComponent },
       { path: 'users', component: UsersComponent },
       { path: 'categories', component: CategoriesComponent },
       { path: 'orders', component: OrdersComponent },
-    ]
-  }
+    ],
+  },
 ];
 
 @NgModule({
-  imports: [
-    RouterModule.forChild(routes)
-  ],
-  exports: [
-    RouterModule
-  ],
-  providers: [
-    AdminGuard
-  ]
+  imports: [RouterModule.forChild(routes)],
+  exports: [RouterModule],
+  providers: [AdminGuard],
 })
 export class AdminRoutingModule {}

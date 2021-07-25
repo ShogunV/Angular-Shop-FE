@@ -1,38 +1,55 @@
 import { Component, OnInit } from '@angular/core';
-import { AccordionModule } from 'primeng/components/accordion/accordion';
-import { SharedModule } from 'primeng/components/common/shared';
 
 import { AdminService } from '../../services/admin.service';
 import { CartService } from '../../../front-store/services/cart.service';
 
+export type Product = {
+  id: number;
+  title: string;
+  description: string;
+  image: File | string;
+  price: number;
+  discount: number;
+  category: string;
+  category_id: number;
+};
+
+export interface CartProduct extends Product {
+  quantity: number;
+}
+
+export type Order = {
+  id: number;
+  user: string;
+  created_at: string;
+  total: number;
+  data: CartProduct[];
+};
+
+export interface OrderResponse {
+  complete: boolean;
+  orders: Order[];
+}
+
 @Component({
   selector: 'app-orders',
   templateUrl: './orders.component.html',
-  styleUrls: ['./orders.component.scss']
+  styleUrls: ['./orders.component.scss'],
 })
 export class OrdersComponent implements OnInit {
-  orders = [];
+  orders: Order[] = [];
   loading = false;
-  ie;
 
-  constructor(private adminService: AdminService, private cartService: CartService) { }
+  constructor(
+    private adminService: AdminService,
+    public cartService: CartService
+  ) {}
 
   ngOnInit() {
     this.loading = true;
-    this.adminService.getOrders().subscribe(data => {
+    this.adminService.getOrders().subscribe((data: OrderResponse) => {
       this.loading = false;
       this.orders = data['orders'];
     });
-
-    const ua = window.navigator.userAgent;
-    const msie = ua.indexOf('MSIE ');
-
-    if (msie > 0  || !!navigator.userAgent.match(/Trident.*rv\:11\./)) {
-      return this.ie = true;
-    } else {
-      return this.ie = false;
-    }
   }
-
 }
-

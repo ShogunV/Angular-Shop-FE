@@ -5,29 +5,55 @@
         <div class="panel-heading">Login</div>
         <div class="panel-body">
           <form class="form-horizontal" (ngSubmit)="onLogin(f)" #f="ngForm">
-            
-            <div class="form-group" [class.has-error]="errors?.email || errors?.error">
-              <label for="email" class="col-md-4 control-label">E-Mail Address</label>
-              
+            <div
+              class="form-group"
+              [class.has-error]="errors?.email || errors?.error"
+            >
+              <label for="email" class="col-md-4 control-label"
+                >E-Mail Address</label
+              >
+
               <div class="col-md-6">
-                <input id="email" type="email" class="form-control" name="email" placeholder="Enter email..." ngModel required autofocus>
-                
+                <input
+                  id="email"
+                  type="email"
+                  class="form-control"
+                  name="email"
+                  placeholder="Enter email..."
+                  ngModel
+                  required
+                  autofocus
+                />
+
                 <span class="help-block" *ngIf="errors?.email">
                   <strong>{{ errors.email }}</strong>
                 </span>
-                
+
                 <span class="help-block" *ngIf="errors?.error">
                   <strong>{{ errors.error }}</strong>
                 </span>
               </div>
             </div>
-            
-            <div class="form-group" [class.has-error]="errors?.password || errors?.error">
-              <label for="password" class="col-md-4 control-label">Password</label>
-              
+
+            <div
+              class="form-group"
+              [class.has-error]="errors?.password || errors?.error"
+            >
+              <label for="password" class="col-md-4 control-label"
+                >Password</label
+              >
+
               <div class="col-md-6">
-                <input id="password" type="password" class="form-control" name="password" placeholder="Enter password..." ngModel required>
-                
+                <input
+                  id="password"
+                  type="password"
+                  class="form-control"
+                  name="password"
+                  placeholder="Enter password..."
+                  ngModel
+                  required
+                />
+
                 <span class="help-block" *ngIf="errors?.password">
                   <strong>{{ errors.password }}</strong>
                 </span>
@@ -37,13 +63,21 @@
                 </span>
               </div>
             </div>
-            
+
             <div class="form-group">
               <div class="col-md-8 col-md-offset-4">
-                <button type="submit" class="btn btn-primary" [disabled]="!f.valid">
+                <button
+                  type="submit"
+                  class="btn btn-primary"
+                  [disabled]="!f.valid"
+                >
                   Login
                 </button>
-                <button type="button" class="btn btn-default" (click)="goBack()">
+                <button
+                  type="button"
+                  class="btn btn-default"
+                  (click)="goBack()"
+                >
                   Back
                 </button>
               </div>

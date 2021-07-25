@@ -1,38 +1,38 @@
 nav.navbar {
-    margin-bottom: 0;
+  margin-bottom: 0;
 }
 
-.navbar-nav>li>a {
-    height: 52px;
+.navbar-nav > li > a {
+  height: 52px;
 }
 
 .logo-container {
-    max-width: 80%;
-    margin: 0 auto;
+  max-width: 80%;
+  margin: 0 auto;
 }
 
 .logo {
-    font-family: trench;
-    margin-top: 10px;
+  font-family: trench;
+  margin-top: 10px;
+  color: #333;
+  font-size: 15rem;
+  a {
     color: #333;
-    font-size: 15rem;
-    a {
-        color: #333;
-        text-decoration: none;
-    }
+    text-decoration: none;
+  }
 }
 
 .fa-shopping-cart {
-    margin-right: 4px;
-    font-size: 2rem;
+  margin-right: 4px;
+  font-size: 2rem;
 }
 
 @media (max-width: 768px) {
-    .logo {
-        font-size: 8rem;
-    }
+  .logo {
+    font-size: 8rem;
+  }
 
-    .home {
-        height: 20px;
-    }
+  .home {
+    height: 20px;
+  }
 }

@@ -1,67 +1,63 @@
 .container-fluid {
-    background-color: rgb(54, 58, 80);
-    color: rgb(221, 221, 221);
-    margin-top: 0;
-    min-height: calc(100vh - 299px);
+  background-color: rgb(54, 58, 80);
+  color: rgb(221, 221, 221);
+  margin-top: 0;
+  min-height: calc(100vh - 299px);
 }
 
 #myMenu {
-    height: 100%;
+  height: 100%;
+  background-color: rgb(54, 58, 80);
+  color: rgb(221, 221, 221);
+  border: 1px solid rgb(65, 66, 70);
+  .navbar {
+    margin-bottom: 0;
+  }
+  .nav {
+    text-align: center;
     background-color: rgb(54, 58, 80);
     color: rgb(221, 221, 221);
-    border: 1px solid rgb(65, 66, 70);
-    .navbar {
-        margin-bottom: 0;
+    border: 1px solid rgb(58, 62, 73);
+    li {
+      a {
+        padding: 15px 0;
+      }
     }
-    .nav {
-        text-align: center;
-        background-color: rgb(54, 58, 80);
-        color: rgb(221, 221, 221);
-        border: 1px solid rgb(58, 62, 73);
-        li {
-            a{
-                padding: 15px 0;
-            }
-        } 
-    }
-    .fa {
-        display: block;
-        font-size: 28px;
-    }
+  }
+  .fa {
+    display: block;
+    font-size: 28px;
+  }
 }
-
-// :host /deep/ .product-table td,:host /deep/ .product-table th {
-//     text-align: center;
-// }
 
 .admin-view {
-    margin-bottom: 20px;    
+  margin-bottom: 20px;
 }
 
-/* make sidebar nav vertical */ 
+/* make sidebar nav vertical */
 @media (min-width: 768px) {
-    .sidebar-nav .navbar .navbar-collapse {
-      padding: 0;
-      max-height: none;
-    }
-    .sidebar-nav .navbar ul {
-      float: none;
-    }
-    .sidebar-nav .navbar ul:not {
-      display: block;
-    }
-    .sidebar-nav .navbar li {
-      float: none;
-      display: block;
-    }
-    .sidebar-nav .navbar li a {
-      padding-top: 12px;
-      padding-bottom: 12px;
-    }
+  .sidebar-nav .navbar .navbar-collapse {
+    padding: 0;
+    max-height: none;
+  }
+  .sidebar-nav .navbar ul {
+    float: none;
+  }
+  .sidebar-nav .navbar ul:not {
+    display: block;
+  }
+  .sidebar-nav .navbar li {
+    float: none;
+    display: block;
+  }
+  .sidebar-nav .navbar li a {
+    padding-top: 12px;
+    padding-bottom: 12px;
+  }
 }
 
 @media (max-width: 768px) {
-    .container-fluid{
-        min-height: calc(100vh - 220px);
-    }
+  .container-fluid {
+    min-height: calc(100vh - 220px);
+  }
 }

@@ -1,24 +1,61 @@
 <h3 class="text-center">Users</h3>
 
-<p-dataTable [value]="users" class="product-table" [paginator]="true" rows="15" [responsive]="true">
-  <p-header>Users</p-header>
-  <p-column field="name" header="Name" [sortable]="true"></p-column>
-  <p-column field="email" header="Email" [sortable]="true"></p-column>
-  <p-column field="totalOrders" header="Total orders" [sortable]="true">
-    <ng-template pTemplate type="body" let-user="rowData">
-      {{ user.totalOrders || 0 }}
-    </ng-template>
-  </p-column>
-  <p-column field="totalItems" header="Total items bought" [sortable]="true">
-    <ng-template pTemplate type="body" let-user="rowData">
-      {{ user.totalItems || 0 }}
-    </ng-template>
-  </p-column>
-  <p-column field="totalDineros" header="Total money spent" [sortable]="true">
-      <ng-template pTemplate type="body" let-user="rowData">
-          {{ user.totalDineros/100 || 0 | currency:'EUR':'symbol':'1.2-2' }}
-      </ng-template>
-  </p-column>
-</p-dataTable>
+<p-table
+  [value]="users"
+  class="product-table"
+  [paginator]="true"
+  [rows]="15"
+  [responsive]="true"
+>
+  <ng-template pTemplate="caption">
+    <div class="p-d-flex p-ai-center p-jc-between">
+      <h5 class="p-m-0">Users</h5>
+      <span class="p-input-icon-left">
+        <i class="pi pi-search"></i>
+        <input pInputText type="text" placeholder="Search..." />
+      </span>
+    </div>
+  </ng-template>
+
+  <ng-template pTemplate="header">
+    <tr>
+      <th pSortableColumn="name">
+        Name <p-sortIcon field="name"></p-sortIcon>
+      </th>
+      <th pSortableColumn="email">
+        Email <p-sortIcon field="email"></p-sortIcon>
+      </th>
+      <th pSortableColumn="totalOrders">
+        Total orders <p-sortIcon field="totalOrders"></p-sortIcon>
+      </th>
+      <th pSortableColumn="totalItems">
+        Total items bought <p-sortIcon field="totalItems"></p-sortIcon>
+      </th>
+      <th pSortableColumn="totalDineros">
+        Total money spent <p-sortIcon field="totalDineros"></p-sortIcon>
+      </th>
+    </tr>
+  </ng-template>
+
+  <ng-template pTemplate="body" let-user>
+    <tr>
+      <td>
+        {{ user.name }}
+      </td>
+      <td>
+        {{ user.email }}
+      </td>
+      <td>
+        {{ user.totalOrders || 0 }}
+      </td>
+      <td>
+        {{ user.totalItems || 0 }}
+      </td>
+      <td>
+        {{ user.totalDineros || 0 | currency: "EUR":"symbol":"1.2-2" }}
+      </td>
+    </tr>
+  </ng-template>
+</p-table>
 
 <app-loader [loading]="loading"></app-loader>
