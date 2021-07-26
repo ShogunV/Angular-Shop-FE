@@ -1,62 +1,63 @@
 <div class="container">
-  <div class="col-lg-offset-8 col-sm-offset-6 col-lg-4 col-sm-6">
-    <input
-      id="search"
-      type="text"
-      class="form-control"
-      name="search"
-      placeholder="Search..."
-      [(ngModel)]="searchText"
-      required
-    />
+  <div class="row d-flex justify-content-end mb-4">
+    <div class="col-12 col-md-6 col-lg-4">
+      <input
+        id="search"
+        type="text"
+        class="form-control"
+        name="search"
+        placeholder="Search..."
+        [(ngModel)]="searchText"
+        required
+      />
+    </div>
   </div>
-  <br /><br /><br />
 
-  <div
-    class="col-lg-4 col-sm-6"
-    *ngFor="
-      let product of productService.products
-        | category: categoryService.category
-        | search: searchText
-    "
-  >
-    <div *ngIf="product.title" class="thumbnail">
-      <a [routerLink]="['/product', product.id]"
-        ><img
-          src="{{ url }}{{ 'storage/' }}{{
-            product.image ?? 'images/No_image_available.png'
-          }}"
-      /></a>
-      <div class="caption clearfix">
-        <h3>{{ product.title }}</h3>
-        <p *ngIf="product.description">
-          {{ product.description.split("\n")[0] }}
-        </p>
-        <div class="ribbon" *ngIf="product.discount > 0">
-          <span>{{ -product.discount }}%</span>
-        </div>
-        <div class="price pull-left">
-          <div
-            class="full-price"
-            [style.visibility]="product.discount > 0 ? 'visible' : 'hidden'"
+  <div class="row">
+    <div
+      class="col-lg-4 col-sm-6 mb-3"
+      *ngFor="
+        let product of productService.products
+          | category: categoryService.category
+          | search: searchText
+      "
+    >
+      <div *ngIf="product.title" class="thumbnail">
+        <a class="w-100" [routerLink]="['/product', product.id]"
+          ><img class="img-fluid"
+            src="{{ url + 'storage/'}}{{ product.image ?? 'images/No_image_available.png' }}"
+        /></a>
+        <div class="caption clearfix">
+          <h3>{{ product.title }}</h3>
+          <p *ngIf="product.description">
+            {{ product.description.split("\n")[0] }}
+          </p>
+          <div class="ribbon" *ngIf="product.discount > 0">
+            <span>{{ -product.discount }}%</span>
+          </div>
+          <div class="price pull-left">
+            <div
+              class="full-price"
+              [style.visibility]="product.discount > 0 ? 'visible' : 'hidden'"
+            >
+              {{ product.price | currency: "EUR":"symbol":"1.2-2" }}
+            </div>
+            <div class="discount-price">
+              {{
+                cartService.getDiscountPrice(product)
+                  | currency: "EUR":"symbol":"1.2-2"
+              }}
+            </div>
+          </div>
+          <button
+            type="button"
+            class="btn btn-success btn-lg pull-right cart"
+            (click)="addToCart(product)"
           >
-            {{ product.price | currency: "EUR":"symbol":"1.2-2" }}
-          </div>
-          <div class="discount-price">
-            {{
-              cartService.getDiscountPrice(product)
-                | currency: "EUR":"symbol":"1.2-2"
-            }}
-          </div>
+            <i class="fa fa-shopping-cart" aria-hidden="true"></i
+            ><span class="glyphicon glyphicon-shopping-cart"></span>Add to cart
+          </button>
         </div>
-        <button
-          type="button"
-          class="btn btn-success btn-lg pull-right cart"
-          (click)="addToCart(product)"
-        >
-          <i class="fa fa-shopping-cart" aria-hidden="true"></i
-          ><span class="glyphicon glyphicon-shopping-cart"></span>Add to cart
-        </button>
       </div>
     </div>
   </div>

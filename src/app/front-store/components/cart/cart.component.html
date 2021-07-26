@@ -1,77 +1,84 @@
 <div class="container">
   <div *ngIf="cartService.cart.length > 0">
-    <div>
+    <div class="d-flex justify-content-between">
       <h4 class="text-center">
         Cart
-        <button
-          class="btn btn-sm btn-danger pull-right clearCart"
-          (click)="removeAllFromCart()"
-        >
-          <i class="fa fa-trash-o" aria-hidden="true"></i>Clear cart
-        </button>
       </h4>
+      <button
+        class="btn btn-sm btn-danger h-100 clearCart"
+        (click)="removeAllFromCart()"
+      >
+      <i class="pi pi-trash"></i>Clear cart
+      </button>
     </div>
     <table class="table table-striped">
-      <tr>
-        <th>#</th>
-        <th>Product</th>
-        <th>Quantity</th>
-        <th>Before Discount</th>
-        <th>Discount</th>
-        <th>After Discount</th>
-        <th>Price</th>
-      </tr>
+      <thead>
+        <tr>
+          <th scope="col">#</th>
+          <th scope="col">Product</th>
+          <th scope="col">Quantity</th>
+          <th scope="col">Before Discount</th>
+          <th scope="col">Discount</th>
+          <th scope="col">After Discount</th>
+          <th scope="col">Price</th>
+        </tr>
+      </thead>
 
-      <tr *ngFor="let product of cartService.cart">
-        <td>#</td>
-        <td>{{ product.title }}</td>
-        <td>
-          <button class="btn btn-xs btn-default" (click)="addToCart(product)">
-            +
-          </button>
-          {{ product.quantity }}
-          <button
-            class="btn btn-xs btn-default"
-            (click)="removeOneFromCart(product)"
-          >
-            -
-          </button>
-          <button
-            class="btn btn-xs btn-danger"
-            (click)="removeFromCart(product)"
-          >
-            <i class="fa fa-trash-o" aria-hidden="true"></i>
-          </button>
-        </td>
-        <td>{{ product.price | currency: "EUR":"symbol":"1.2-2" }}</td>
-        <td>{{ product.discount }} %</td>
-        <td>
-          {{
-            cartService.getDiscountPrice(product)
-              | currency: "EUR":"symbol":"1.2-2"
-          }}
-        </td>
-        <td>
-          {{
-            cartService.getProductsPrice(product)
-              | currency: "EUR":"symbol":"1.2-2"
-          }}
-        </td>
-      </tr>
+      <tbody>
+        <tr *ngFor="let product of cartService.cart">
+          <td>#</td>
+          <td>{{ product.title }}</td>
+          <td>
+            <button class="btn btn-xs btn-default" (click)="addToCart(product)">
+              +
+            </button>
+            {{ product.quantity }}
+            <button
+              class="btn btn-xs btn-default"
+              (click)="removeOneFromCart(product)"
+            >
+              -
+            </button>
+            <button
+              class="btn btn-xs btn-danger"
+              (click)="removeFromCart(product)"
+            >
+              <i class="pi pi-trash"></i>
+            </button>
+          </td>
+          <td>{{ product.price | currency: "EUR":"symbol":"1.2-2" }}</td>
+          <td>{{ product.discount }} %</td>
+          <td>
+            {{
+              cartService.getDiscountPrice(product)
+                | currency: "EUR":"symbol":"1.2-2"
+            }}
+          </td>
+          <td>
+            {{
+              cartService.getProductsPrice(product)
+                | currency: "EUR":"symbol":"1.2-2"
+            }}
+          </td>
+        </tr>
 
-      <tr>
-        <td colspan="6">Total Price</td>
-        <td>
-          {{ cartService.getTotalPrice() | currency: "EUR":"symbol":"1.2-2" }}
-        </td>
-      </tr>
+        <tr>
+          <td colspan="6">Total Price</td>
+          <td>
+            {{ cartService.getTotalPrice() | currency: "EUR":"symbol":"1.2-2" }}
+          </td>
+        </tr>
+      </tbody>
     </table>
 
-    <button class="btn btn-lg btn-success pull-right" (click)="onCheckout()">
-      Checkout
-    </button>
-
-    <a class="btn btn-lg btn-default" routerLink="">Back</a>
+    <div class="row">
+      <div class="d-flex justify-content-between">
+        <a class="btn btn-lg btn-default" routerLink="">Back</a>
+        <button class="btn btn-lg btn-success pull-right" (click)="onCheckout()">
+          Checkout
+        </button>
+      </div>
+    </div>
   </div>
 
   <div *ngIf="cartService.cart.length === 0">
@@ -87,5 +94,7 @@
   acceptLabel="OK"
   rejectLabel="Back"
 ></p-confirmDialog>
+
+<p-toast key="cart-toast" position="top-right"></p-toast>
 
 <app-loader [loading]="cartService.loading"></app-loader>

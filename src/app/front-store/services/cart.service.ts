@@ -31,9 +31,10 @@ export class CartService {
     const inCart = this.cart.find((el) => el.id === item.id);
     if (inCart) {
       inCart.quantity++;
+      return this.cart
     } else {
       const newItem = { ...item, quantity: 1 };
-      this.cart = [...this.cart, newItem];
+      return this.cart = [...this.cart, newItem];
     }
   }
 

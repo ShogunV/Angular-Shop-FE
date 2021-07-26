@@ -34,9 +34,7 @@
               "src/styles.scss"
             ],
             "scripts": [
-              "@popperjs/core/dist/umd/popper.min.js",
-              "bootstrap/js/dist/popover",
-              "bootstrap/js/dist/dropdown"
+              "bootstrap/dist/js/bootstrap.bundle.min.js"
             ]
           },
           "configurations": {
