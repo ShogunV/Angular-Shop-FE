@@ -19,8 +19,6 @@ export interface LoginResponse {
 })
 export class LoginComponent implements OnInit {
   errors: any = [];
-  // login;
-  private alive = true;
 
   constructor(private authService: AuthService, private router: Router) {}
 
@@ -36,14 +34,15 @@ export class LoginComponent implements OnInit {
           localStorage.setItem('username', response['user'].name);
           localStorage.setItem('email', response['user'].email);
           if (response['user'].role === 'admin') {
-            localStorage.setItem('admin', 'true')
+            localStorage.setItem('admin', 'true');
             this.router.navigate(['admin']);
           } else {
             this.router.navigate(['']);
           }
         },
         (response) => {
-          this.errors = response.error;
+          const { errors } = response.error;
+          this.errors = errors ? errors : response.error;
         }
       );
   }

@@ -1,71 +1,61 @@
 <div class="container">
   <div class="row">
-    <div class="col-md-8 col-md-offset-2">
-      <div class="panel panel-default">
-        <div class="panel-heading">Login</div>
-        <div class="panel-body">
+    <div class="d-flex justify-content-center">
+      <div class="card text-dark bg-light mb-3 col-8 col-lg-6">
+        <div class="card-header">Login</div>
+        <div class="card-body">
           <form class="form-horizontal" (ngSubmit)="onLogin(f)" #f="ngForm">
-            <div
-              class="form-group"
-              [class.has-error]="errors?.email || errors?.error"
-            >
-              <label for="email" class="col-md-4 control-label"
+            <div class="mb-3">
+              <label for="email" class="form-label"
                 >E-Mail Address</label
               >
 
-              <div class="col-md-6">
-                <input
-                  id="email"
-                  type="email"
-                  class="form-control"
-                  name="email"
-                  placeholder="Enter email..."
-                  ngModel
-                  required
-                  autofocus
-                />
+              <input
+                id="email"
+                type="email"
+                class="form-control"
+                [class.is-invalid]="errors?.email || errors?.data"
+                name="email"
+                placeholder="Enter email..."
+                ngModel
+                required
+                autofocus
+              />
 
-                <span class="help-block" *ngIf="errors?.email">
-                  <strong>{{ errors.email }}</strong>
-                </span>
+              <div class="invalid-feedback" *ngIf="errors?.email">
+                <strong class="d-block" *ngFor="let item of errors?.email">{{ item }}</strong>
+              </div>
 
-                <span class="help-block" *ngIf="errors?.error">
-                  <strong>{{ errors.error }}</strong>
-                </span>
+              <div class="invalid-feedback" *ngIf="errors?.data">
+                <strong class="d-block" >{{ errors.data }}</strong>
               </div>
             </div>
 
-            <div
-              class="form-group"
-              [class.has-error]="errors?.password || errors?.error"
-            >
-              <label for="password" class="col-md-4 control-label"
-                >Password</label
-              >
+            <div class="mb-3">
+              <label for="password" class="form-label">Password</label>
 
-              <div class="col-md-6">
-                <input
-                  id="password"
-                  type="password"
-                  class="form-control"
-                  name="password"
-                  placeholder="Enter password..."
-                  ngModel
-                  required
-                />
+              <input
+                id="password"
+                type="password"
+                class="form-control"
+                [class.is-invalid]="errors?.password || errors?.data"
+                name="password"
+                placeholder="Enter password..."
+                ngModel
+                required
+              />
 
-                <span class="help-block" *ngIf="errors?.password">
-                  <strong>{{ errors.password }}</strong>
-                </span>
+              <div class="invalid-feedback" *ngIf="errors?.password">
+                <strong class="d-block" *ngFor="let item of errors?.password">{{ errors.password }}</strong>
+              </div>
 
-                <span class="help-block" *ngIf="errors?.error">
-                  <strong>{{ errors.error }}</strong>
-                </span>
+              <div class="invalid-feedback" *ngIf="errors?.data">
+                <strong class="d-block" >{{ errors.data }}</strong>
               </div>
             </div>
 
             <div class="form-group">
-              <div class="col-md-8 col-md-offset-4">
+              <div class="d-flex justify-content-center">
                 <button
                   type="submit"
                   class="btn btn-primary"
