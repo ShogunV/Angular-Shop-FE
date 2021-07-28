@@ -10,7 +10,6 @@ import {
 import { OrderResponse } from '../components/orders/orders.component';
 import { ProductResponse } from '../components/products/products.component';
 import { UserResponse } from '../components/users/users.component';
-import { Product } from 'src/app/front-store/models/Product.model';
 
 @Injectable()
 export class AdminService {
@@ -60,7 +59,7 @@ export class AdminService {
 
   saveProduct(form: any) {
     return this.http.post<ProductResponse>(
-      environment.apiUrl + 'admin/product/store',
+      environment.apiUrl + 'admin/products/',
       form,
       {
         headers: new HttpHeaders()
@@ -73,7 +72,7 @@ export class AdminService {
 
   editProduct(form: any) {
     return this.http.post<ProductResponse>(
-      environment.apiUrl + 'admin/product/edit',
+      environment.apiUrl + 'admin/products/' + form.get('id'),
       form,
       {
         headers: new HttpHeaders()
@@ -86,7 +85,7 @@ export class AdminService {
 
   deleteProduct(id: number) {
     return this.http.delete<ProductResponse>(
-      environment.apiUrl + 'admin/product/' + id,
+      environment.apiUrl + 'admin/products/' + id,
       {
         headers: new HttpHeaders()
           .delete('Content-Type')
@@ -96,16 +95,9 @@ export class AdminService {
     );
   }
 
-  // deleteProduct(id) {
-  //   return this.http.post<ProductResponse>(environment.apiUrl + 'admin/product/delete/' + id, id, {
-  //     headers: new HttpHeaders().delete('Content-Type').set('Authorization', `Bearer ${this.authService.getToken()}`)
-  //     .set('Accept', 'application/json')
-  //   });
-  // }
-
   saveCategory(category: Category) {
     return this.http.post<CategoryResponse>(
-      environment.apiUrl + 'admin/category/store',
+      environment.apiUrl + 'admin/categories',
       category,
       {
         headers: new HttpHeaders()
@@ -117,9 +109,9 @@ export class AdminService {
   }
 
   editCategory(category: Category) {
-    return this.http.put<CategoryResponse>(
-      environment.apiUrl + 'admin/category/' + category.id,
-      category,
+    return this.http.post<CategoryResponse>(
+      environment.apiUrl + 'admin/categories/' + category.id,
+      { ...category, _method: 'put' },
       {
         headers: new HttpHeaders()
           .delete('Content-Type')
@@ -128,17 +120,10 @@ export class AdminService {
       }
     );
   }
-
-  // editCategory(category) {
-  //   return this.http.post<CategoryResponse>(environment.apiUrl + 'admin/category/' + category.id, category, {
-  //     headers: new HttpHeaders().delete('Content-Type').set('Authorization', `Bearer ${this.authService.getToken()}`)
-  //     .set('Accept', 'application/json')
-  //   });
-  // }
 
   deleteCategory(id: number) {
     return this.http.delete<CategoryResponse>(
-      environment.apiUrl + 'admin/category/' + id,
+      environment.apiUrl + 'admin/categories/' + id,
       {
         headers: new HttpHeaders()
           .delete('Content-Type')
@@ -147,11 +132,4 @@ export class AdminService {
       }
     );
   }
-
-  // deleteCategory(id) {
-  //   return this.http.post(environment.apiUrl + 'admin/category/delete/' + id, id, {
-  //     headers: new HttpHeaders().delete('Content-Type').set('Authorization', `Bearer ${this.authService.getToken()}`)
-  //     .set('Accept', 'application/json')
-  //   });
-  // }
 }

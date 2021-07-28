@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { NgForm } from '@angular/forms';
-import { ConfirmationService } from 'primeng/api';
+import { ConfirmationService, MessageService } from 'primeng/api';
 import { Message } from 'primeng/api';
 
 import { AdminService } from '../../services/admin.service';
@@ -37,7 +37,8 @@ export class CategoriesComponent implements OnInit {
   constructor(
     private adminService: AdminService,
     private confirmationService: ConfirmationService,
-    private categoryService: CategoryService
+    private categoryService: CategoryService,
+    private messageService: MessageService
   ) {}
 
   ngOnInit() {
@@ -54,30 +55,54 @@ export class CategoriesComponent implements OnInit {
     this.submitted = false;
   }
 
-  onSubmit(form: NgForm) {
+  onSubmit() {
     this.loading = true;
-    this.category = { id: 0, title: form.value.title };
-    this.adminService.saveCategory(this.category).subscribe(
-      (data: CategoryResponse) => {
-        this.categories = data['categories'];
-        this.loading = false;
-        this.categoryService.categories = data['categories'];
-        this.msgs = [
-          {
-            severity: 'success',
-            summary: 'Confirmed',
-            detail: `Category created`,
+
+    if (this.category.title) {
+      if (this.category.id) {
+        this.adminService.editCategory(this.category).subscribe(
+          (data: CategoryResponse) => {
+            this.categories = data['categories'];
+            this.loading = false;
+            this.categoryService.categories = data['categories'];
+            this.messageService.add({
+              key: 'categories-toast',
+              severity: 'success',
+              summary: 'Confirmed',
+              detail: `Category updated`,
+            });
+            this.category = this.emptyCategory;
+            this.errors = null;
+            this.categoryDialog = false;
           },
-        ];
-        this.category = this.emptyCategory;
-        this.errors = null;
-        this.categoryDialog = false;
-      },
-      (response) => {
-        this.loading = false;
-        this.errors = response.error;
+          (response) => {
+            this.loading = false;
+            this.errors = response.error;
+          }
+        );
+      } else {
+        this.adminService.saveCategory(this.category).subscribe(
+          (data: CategoryResponse) => {
+            this.categories = data['categories'];
+            this.loading = false;
+            this.categoryService.categories = data['categories'];
+            this.messageService.add({
+              key: 'categories-toast',
+              severity: 'success',
+              summary: 'Confirmed',
+              detail: `Category created`,
+            });
+            this.category = this.emptyCategory;
+            this.errors = null;
+            this.categoryDialog = false;
+          },
+          (response) => {
+            this.loading = false;
+            this.errors = response.error;
+          }
+        );
       }
-    );
+    }
   }
 
   editCategory(category: Category) {

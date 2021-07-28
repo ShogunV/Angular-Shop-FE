@@ -95,17 +95,19 @@
             role="menu"
             aria-labelledby="dropdownMenu"
           >
-            <li *ngIf="authService.isLoggedIn() && authService.isAdmin()">
-              <a class="nav-link" routerLink="/admin" routerLinkActive="active"
+            <li
+              class="nav-item"
+              *ngIf="authService.isLoggedIn() && authService.isAdmin()"
+            >
+              <a class="nav-link dropdown-item" routerLink="/admin"
                 >Dashboard</a
               >
             </li>
             <li class="nav-item">
               <a
-                class="nav-link"
+                class="nav-link dropdown-item"
                 routerLink=""
                 (click)="onLogout()"
-                class="dropdown-item"
                 >Logout</a
               >
             </li>
