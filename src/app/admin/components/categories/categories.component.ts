@@ -1,10 +1,13 @@
 import { Component, OnInit } from '@angular/core';
-import { NgForm } from '@angular/forms';
 import { ConfirmationService, MessageService } from 'primeng/api';
 import { Message } from 'primeng/api';
 
 import { AdminService } from '../../services/admin.service';
 import { CategoryService } from '../../../front-store/services/category.service';
+
+type CategoryErrors = {
+  title: string[];
+};
 
 export type Category = {
   id: number;
@@ -23,7 +26,8 @@ export interface CategoryResponse {
 })
 export class CategoriesComponent implements OnInit {
   categories: Category[] = [];
-  errors: any = null;
+  noErrors: CategoryErrors = { title: [] };
+  categoryErrors: CategoryErrors = this.noErrors;
   loading = false;
 
   emptyCategory = { id: 0, title: '' };
@@ -57,6 +61,7 @@ export class CategoriesComponent implements OnInit {
 
   onSubmit() {
     this.loading = true;
+    this.submitted = true;
 
     if (this.category.title) {
       if (this.category.id) {
@@ -72,12 +77,23 @@ export class CategoriesComponent implements OnInit {
               detail: `Category updated`,
             });
             this.category = this.emptyCategory;
-            this.errors = null;
+            this.categoryErrors = this.noErrors;
             this.categoryDialog = false;
           },
           (response) => {
             this.loading = false;
-            this.errors = response.error;
+            if (response.status === 422) {
+              return (this.categoryErrors = {
+                ...this.categoryErrors,
+                ...response.error.errors,
+              });
+            }
+            return this.messageService.add({
+              key: 'categories-toast',
+              severity: 'error',
+              summary: 'Error',
+              detail: 'Something went wrong!',
+            });
           }
         );
       } else {
@@ -93,12 +109,23 @@ export class CategoriesComponent implements OnInit {
               detail: `Category created`,
             });
             this.category = this.emptyCategory;
-            this.errors = null;
+            this.categoryErrors = this.noErrors;
             this.categoryDialog = false;
           },
           (response) => {
             this.loading = false;
-            this.errors = response.error;
+            if (response.status === 422) {
+              return (this.categoryErrors = {
+                ...this.categoryErrors,
+                ...response.error.errors,
+              });
+            }
+            return this.messageService.add({
+              key: 'categories-toast',
+              severity: 'error',
+              summary: 'Error',
+              detail: 'Something went wrong!',
+            });
           }
         );
       }
@@ -108,31 +135,6 @@ export class CategoriesComponent implements OnInit {
   editCategory(category: Category) {
     this.category = { ...category };
     this.categoryDialog = true;
-  }
-
-  onEditSubmit(form: NgForm) {
-    this.loading = true;
-    this.category = { id: this.category.id, title: form.value.title };
-    this.adminService.editCategory(this.category).subscribe(
-      (data: CategoryResponse) => {
-        this.categories = data['categories'];
-        this.loading = false;
-        this.categoryService.categories = data['categories'];
-        this.msgs = [
-          {
-            severity: 'success',
-            summary: 'Confirmed',
-            detail: `Category updated`,
-          },
-        ];
-        this.category = this.emptyCategory;
-        this.errors = null;
-      },
-      (response) => {
-        this.loading = false;
-        this.errors = response.error;
-      }
-    );
   }
 
   deleteCategory(category: Category) {
@@ -166,6 +168,7 @@ export class CategoriesComponent implements OnInit {
 
   back() {
     this.categoryDialog = false;
-    this.errors = null;
+    this.categoryErrors = this.noErrors;
+    this.submitted = false;
   }
 }

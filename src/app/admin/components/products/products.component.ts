@@ -1,7 +1,6 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { ConfirmationService, MessageService } from 'primeng/api';
 import { Message } from 'primeng/api';
-import { NgForm } from '@angular/forms';
 
 import { environment } from '../../../../environments/environment';
 import { AdminService } from '../../services/admin.service';
@@ -14,6 +13,15 @@ export interface ProductResponse {
   products: Product[];
   categories: Category[];
 }
+
+type ProductErrors = {
+  title: string[];
+  description: string[];
+  image: string[];
+  category_id: string[];
+  price: string[];
+  discount: string[];
+};
 
 @Component({
   selector: 'app-products',
@@ -39,7 +47,15 @@ export class ProductsComponent implements OnInit {
   };
 
   productDialog: boolean = false;
-  errors: any = null;
+  noErrors: ProductErrors = {
+    title: [],
+    description: [],
+    image: [],
+    category_id: [],
+    price: [],
+    discount: [],
+  };
+  productErrors: ProductErrors = this.noErrors;
   msgs: Message[] = [];
   product: Product = this.emptyProduct;
   products: Product[] = [];
@@ -72,10 +88,12 @@ export class ProductsComponent implements OnInit {
 
   back() {
     this.productDialog = false;
-    this.errors = null;
+    this.productErrors = this.noErrors;
+    this.submitted = false;
   }
 
   onSubmit() {
+    this.submitted = true;
     this.loading = true;
     const { files } = this.fileInput;
 
@@ -108,12 +126,23 @@ export class ProductsComponent implements OnInit {
               detail: `Product updated`,
             });
             this.product = this.emptyProduct;
-            this.errors = null;
+            this.productErrors = this.noErrors;
             this.productDialog = false;
           },
           (response) => {
             this.loading = false;
-            this.errors = response.error;
+            if (response.status === 422) {
+              return (this.productErrors = {
+                ...this.productErrors,
+                ...response.error.errors,
+              });
+            }
+            return this.messageService.add({
+              key: 'products-toast',
+              severity: 'error',
+              summary: 'Error',
+              detail: 'Something went wrong!',
+            });
           }
         );
       } else {
@@ -125,15 +154,26 @@ export class ProductsComponent implements OnInit {
               key: 'products-toast',
               severity: 'success',
               summary: 'Confirmed',
-              detail: `Product created`,
+              detail: 'Product created',
             });
             this.product = this.emptyProduct;
-            this.errors = null;
+            this.productErrors = this.noErrors;
             this.productDialog = false;
           },
           (response) => {
             this.loading = false;
-            this.errors = response.error;
+            if (response.status === 422) {
+              return (this.productErrors = {
+                ...this.productErrors,
+                ...response.error.errors,
+              });
+            }
+            return this.messageService.add({
+              key: 'products-toast',
+              severity: 'error',
+              summary: 'Error',
+              detail: 'Something went wrong!',
+            });
           }
         );
       }
@@ -152,64 +192,6 @@ export class ProductsComponent implements OnInit {
   editProduct(product: Product) {
     this.product = { ...product };
     this.productDialog = true;
-  }
-
-  onEditSubmit(form: NgForm) {
-    this.loading = true;
-    let fileBrowser = this.editFileInput.nativeElement;
-
-    if (fileBrowser.files && fileBrowser.files[0]) {
-      let formData = new FormData();
-      formData.append('id', `${this.product.id}`);
-      formData.append('image', fileBrowser.files[0]);
-      formData.append('price', form.value.price);
-      formData.append('title', form.value.title);
-      formData.append('category', form.value.category);
-      formData.append('discount', form.value.discount);
-      formData.append('description', form.value.description);
-      this.adminService.editProduct(formData).subscribe(
-        (data) => {
-          this.products = data['products'];
-          this.loading = false;
-          this.msgs = [
-            {
-              severity: 'success',
-              summary: 'Confirmed',
-              detail: `Product updated`,
-            },
-          ];
-          this.product = this.emptyProduct;
-          this.errors = null;
-          this.productDialog = false;
-        },
-        (response) => {
-          this.loading = false;
-          this.errors = response.error;
-        }
-      );
-    } else {
-      form.value.id = this.product.id;
-      this.adminService.editProduct(form.value).subscribe(
-        (data) => {
-          this.products = data['products'];
-          this.loading = false;
-          this.msgs = [
-            {
-              severity: 'success',
-              summary: 'Confirmed',
-              detail: `Product updated`,
-            },
-          ];
-          this.product = this.emptyProduct;
-          this.errors = null;
-          this.productDialog = false;
-        },
-        (response) => {
-          this.loading = false;
-          this.errors = response.error;
-        }
-      );
-    }
   }
 
   deleteProduct(product: Product) {

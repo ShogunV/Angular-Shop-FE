@@ -128,6 +128,9 @@
       <small class="p-error" *ngIf="submitted && !category.title"
         >Name is required.</small
       >
+      <div *ngFor="let error of categoryErrors.title">
+        <small class="p-error d-block">{{ error }}</small>
+      </div>
     </div>
   </ng-template>
   <ng-template pTemplate="footer">

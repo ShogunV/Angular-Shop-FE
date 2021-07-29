@@ -133,7 +133,7 @@
   styleClass="p-fluid"
 >
   <ng-template pTemplate="content">
-    <div class="p-field">
+    <div class="p-field mb-3">
       <label for="title">Name</label>
       <input
         type="text"
@@ -146,19 +146,24 @@
       <small class="p-error" *ngIf="submitted && !product.title"
         >Name is required.</small
       >
+      <div *ngFor="let error of productErrors.title">
+        <small class="p-error d-block">{{ error }}</small>
+      </div>
     </div>
-    <div class="p-field">
+    <div class="p-field mb-3">
       <label for="description">Description</label>
       <textarea
         id="description"
         pInputTextarea
         [(ngModel)]="product.description"
-        required
         rows="3"
         cols="20"
       ></textarea>
+      <div *ngFor="let error of productErrors.description">
+        <small class="p-error d-block">{{ error }}</small>
+      </div>
     </div>
-    <div class="p-field">
+    <div class="p-field mb-3">
       <label for="category">Category</label>
       <p-dropdown
         [(ngModel)]="product.category_id"
@@ -174,10 +179,16 @@
           }}</span>
         </ng-template>
       </p-dropdown>
+      <small class="p-error" *ngIf="submitted && !product.category_id"
+        >Category is required.</small
+      >
+      <div *ngFor="let error of productErrors.category_id">
+        <small class="p-error d-block">{{ error }}</small>
+      </div>
     </div>
 
-    <div class="p-field">
-      <label for="category">Product Image</label>
+    <div class="p-field mb-3">
+      <label for="image">Product Image</label>
       <p-fileUpload
         #fileInput
         mode="basic"
@@ -195,15 +206,21 @@
     </div>
 
     <div class="p-formgrid p-grid">
-      <div class="p-field p-col">
+      <div class="p-field p-col mb-3">
         <label for="price">Price</label>
         <p-inputNumber
           id="price"
           [(ngModel)]="product.price"
           suffix="€"
         ></p-inputNumber>
+        <small class="p-error" *ngIf="submitted && !product.price"
+          >Price is required.</small
+        >
+        <div *ngFor="let error of productErrors.price">
+          <small class="p-error d-block">{{ error }}</small>
+        </div>
       </div>
-      <div class="p-field p-col">
+      <div class="p-field p-col mb-3">
         <label for="discount">Discount</label>
         <p-inputNumber
           id="discount"
@@ -211,6 +228,9 @@
           [min]="0"
           [max]="100"
         ></p-inputNumber>
+        <div *ngFor="let error of productErrors.discount">
+          <small class="p-error d-block">{{ error }}</small>
+        </div>
       </div>
     </div>
   </ng-template>
