@@ -1,50 +1,54 @@
 <h3 class="text-center">Orders</h3>
 
-<p-accordion [multiple]="true">
-  <p-accordionTab *ngFor="let order of orders">
-    <p-header>
-      <span>{{ order.user }} - {{ order.created_at }}</span>
-      <span class="pull-right">{{
-        order.total | currency: "EUR":"symbol":"1.2-2"
-      }}</span>
-    </p-header>
-    <table class="table table-striped">
-      <tr>
-        <th>#</th>
-        <th>Product</th>
-        <th>Quantity</th>
-        <th>Before Discount</th>
-        <th>Discount</th>
-        <th>After Discount</th>
-        <th>Price</th>
-      </tr>
+<div class="mb-3">
+  <p-accordion [multiple]="true">
+    <p-accordionTab *ngFor="let order of orders">
+      <p-header class="d-flex justify-content-between w-100">
+        <span>{{ order.user }} - {{ order.created_at }}</span>
+        <span>{{ order.total | currency: "EUR":"symbol":"1.2-2" }}</span>
+      </p-header>
+      <table class="table table-striped">
+        <thead>
+          <tr>
+            <th>#</th>
+            <th>Product</th>
+            <th>Quantity</th>
+            <th>Before Discount</th>
+            <th>Discount</th>
+            <th>After Discount</th>
+            <th>Price</th>
+          </tr>
+        </thead>
 
-      <tr *ngFor="let item of order['data']">
-        <td></td>
-        <td>{{ item["title"] }}</td>
-        <td>{{ item["quantity"] }}</td>
-        <td>{{ item["price"] | currency: "EUR":"symbol":"1.2-2" }}</td>
-        <td>{{ item["discount"] }}%</td>
-        <td>
-          {{
-            cartService.getDiscountPrice(item)
-              | currency: "EUR":"symbol":"1.2-2"
-          }}
-        </td>
-        <td>
-          {{
-            cartService.getProductsPrice(item)
-              | currency: "EUR":"symbol":"1.2-2"
-          }}
-        </td>
-      </tr>
+        <tbody>
+          <tr *ngFor="let item of order['data']">
+            <td></td>
+            <td>{{ item["title"] }}</td>
+            <td>{{ item["quantity"] }}</td>
+            <td>{{ item["price"] | currency: "EUR":"symbol":"1.2-2" }}</td>
+            <td>{{ item["discount"] }}%</td>
+            <td>
+              {{
+                cartService.getDiscountPrice(item)
+                  | currency: "EUR":"symbol":"1.2-2"
+              }}
+            </td>
+            <td>
+              {{
+                cartService.getProductsPrice(item)
+                  | currency: "EUR":"symbol":"1.2-2"
+              }}
+            </td>
+          </tr>
 
-      <tr>
-        <td colspan="6">Total Price</td>
-        <td>{{ order.total | currency: "EUR":"symbol":"1.2-2" }}</td>
-      </tr>
-    </table>
-  </p-accordionTab>
-</p-accordion>
+          <tr>
+            <td colspan="6">Total Price</td>
+            <td>{{ order.total | currency: "EUR":"symbol":"1.2-2" }}</td>
+          </tr>
+        </tbody>
+      </table>
+    </p-accordionTab>
+  </p-accordion>
+</div>
 
 <app-loader [loading]="loading"></app-loader>

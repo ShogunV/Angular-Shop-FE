@@ -1,6 +1,4 @@
-<h3 class="text-center">Categories</h3>
-
-<div className="datatable-crud">
+<div class="datatable-crud mb-3">
   <p-toolbar styleClass="p-mb-4">
     <ng-template pTemplate="left">
       <button
@@ -39,7 +37,7 @@
     [paginator]="true"
     [rows]="15"
     [responsive]="true"
-    [globalFilterFields]="['name', 'quantity', 'total']"
+    [globalFilterFields]="['title']"
   >
     <ng-template pTemplate="caption">
       <div

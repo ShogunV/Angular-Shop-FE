@@ -2,17 +2,17 @@
   <h1 class="text-center">Admin Dashboard</h1>
 
   <div class="row">
-    <div class="col-lg-offset-1 col-lg-2 col-sm-2">
+    <div class="col-md-2 col-12">
       <div class="sidebar-nav">
         <ul class="nav navbar-light flex-column">
           <li class="nav-item">
             <a
-              class="nav-link active"
+              class="nav-link"
               aria-current="page"
               routerLink="products"
               routerLinkActive="active"
               [routerLinkActiveOptions]="{ exact: true }"
-              ><i class="pi pi-briefcase"></i>Products</a
+              ><i class="pi pi-briefcase me-3"></i>Products</a
             >
           </li>
           <li class="nav-item">
@@ -21,7 +21,7 @@
               routerLink="users"
               routerLinkActive="active"
               [routerLinkActiveOptions]="{ exact: true }"
-              ><i class="pi pi-user"></i>Users</a
+              ><i class="pi pi-user me-3"></i>Users</a
             >
           </li>
           <li class="nav-item">
@@ -30,7 +30,7 @@
               routerLink="categories"
               routerLinkActive="active"
               [routerLinkActiveOptions]="{ exact: true }"
-              ><i class="pi pi-list"></i>Categories</a
+              ><i class="pi pi-list me-3"></i>Categories</a
             >
           </li>
           <li class="nav-item">
@@ -39,13 +39,13 @@
               routerLink="orders"
               routerLinkActive="active"
               [routerLinkActiveOptions]="{ exact: true }"
-              ><i class="pi pi-shopping-cart"></i>Orders</a
+              ><i class="pi pi-shopping-cart me-3"></i>Orders</a
             >
           </li>
         </ul>
       </div>
     </div>
-    <div class="col-lg-8 col-sm-10 admin-view">
+    <div class="col-12 col-md-10 admin-view">
       <router-outlet></router-outlet>
     </div>
   </div>

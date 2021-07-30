@@ -1,10 +1,14 @@
 .container-fluid {
   background-color: rgb(54, 58, 80);
   color: rgb(221, 221, 221);
-  margin-top: 0;
-  min-height: calc(100vh - 299px);
-}
-
-.admin-view {
-  margin-bottom: 20px;
+  .sidebar-nav {
+    .nav-link {
+      color: #dee2e6;
+      &:hover,
+      &.active {
+        color: #f8f9fa;
+        font-weight: bold;
+      }
+    }
+  }
 }
