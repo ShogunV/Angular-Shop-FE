@@ -16,7 +16,7 @@ type CheckoutData = {
 
 @Injectable()
 export class CartService {
-  public cart: CartProduct[] = [];
+  cart: CartProduct[] = [];
   msgs: Message[] = [];
   loading = false;
 

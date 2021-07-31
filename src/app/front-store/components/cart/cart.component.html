@@ -1,5 +1,5 @@
 <div class="container">
-  <div *ngIf="cartService.cart.length > 0">
+  <div class="row" *ngIf="cartService.cart.length > 0">
     <div class="d-flex justify-content-between">
       <h4 class="text-center">
         Cart
@@ -73,8 +73,8 @@
 
     <div class="row">
       <div class="d-flex justify-content-between">
-        <a class="btn btn-lg btn-default" routerLink="">Back</a>
-        <button class="btn btn-lg btn-success pull-right" (click)="onCheckout()">
+        <a class="btn btn-secondary" routerLink="">Back</a>
+        <button class="btn btn-success" (click)="onCheckout()">
           Checkout
         </button>
       </div>
@@ -84,7 +84,7 @@
   <div *ngIf="cartService.cart.length === 0">
     <h2 class="text-center">Your Cart is Empty!</h2>
 
-    <a class="btn btn-lg btn-default" routerLink="">Back</a>
+    <a class="btn btn-secondary" routerLink="">Back</a>
   </div>
 </div>
 
