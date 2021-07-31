@@ -6,8 +6,8 @@ import { Product } from '../../models/Product.model';
 import { ProductService } from '../../services/product.service';
 import { CartService } from '../../services/cart.service';
 import { CategoryService } from '../../services/category.service';
-import { Category } from 'src/app/admin/components/categories/categories.component';
-import { CartProduct } from 'src/app/admin/components/orders/orders.component';
+import { CartProduct } from '../../models/CartProduct.model';
+import { Category } from '../../models/Category.model';
 
 @Component({
   selector: 'app-products',

@@ -4,13 +4,13 @@ import { NgForm } from '@angular/forms';
 import { first } from 'rxjs/operators';
 
 import { AuthService } from '../../services/auth.service';
-import { User } from 'src/app/admin/components/users/users.component';
+import { User } from '../../models/User.model';
 
-export interface LoginResponse {
+export type LoginResponse = {
   complete: boolean;
   token: string;
   user: User;
-}
+};
 
 @Component({
   selector: 'app-login',

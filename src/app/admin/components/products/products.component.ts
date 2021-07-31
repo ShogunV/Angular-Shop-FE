@@ -6,13 +6,13 @@ import { environment } from '../../../../environments/environment';
 import { AdminService } from '../../services/admin.service';
 import { CartService } from '../../../front-store/services/cart.service';
 import { Product } from '../../../front-store/models/Product.model';
-import { Category } from '../categories/categories.component';
+import { Category } from 'src/app/front-store/models/Category.model';
 
-export interface ProductResponse {
+export type ProductResponse = {
   complete: boolean;
   products: Product[];
   categories: Category[];
-}
+};
 
 type ProductErrors = {
   title: string[];
@@ -206,13 +206,12 @@ export class ProductsComponent implements OnInit {
           this.loading = false;
           this.products = data['products'];
         });
-        this.msgs = [
-          {
-            severity: 'info',
-            summary: 'Confirmed',
-            detail: `${product.title} deleted`,
-          },
-        ];
+        return this.messageService.add({
+          key: 'products-toast',
+          severity: 'info',
+          summary: 'Confirmed',
+          detail: `${product.title} deleted`,
+        });
       },
       reject: () => {
         this.loading = false;

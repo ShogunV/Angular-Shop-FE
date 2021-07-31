@@ -2,10 +2,8 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 
 import { environment } from '../../../environments/environment';
-import {
-  Category,
-  CategoryResponse,
-} from 'src/app/admin/components/categories/categories.component';
+import { CategoryResponse } from 'src/app/admin/components/categories/categories.component';
+import { Category } from '../models/Category.model';
 
 @Injectable()
 export class CategoryService {

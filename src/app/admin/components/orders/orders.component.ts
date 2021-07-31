@@ -2,34 +2,12 @@ import { Component, OnInit } from '@angular/core';
 
 import { AdminService } from '../../services/admin.service';
 import { CartService } from '../../../front-store/services/cart.service';
+import { Order } from 'src/app/front-store/models/Order.model';
 
-export type Product = {
-  id: number;
-  title: string;
-  description: string;
-  image: File | string;
-  price: number;
-  discount: number;
-  category: string;
-  category_id: number;
-};
-
-export interface CartProduct extends Product {
-  quantity: number;
-}
-
-export type Order = {
-  id: number;
-  user: string;
-  created_at: string;
-  total: number;
-  data: CartProduct[];
-};
-
-export interface OrderResponse {
+export type OrderResponse = {
   complete: boolean;
   orders: Order[];
-}
+};
 
 @Component({
   selector: 'app-orders',

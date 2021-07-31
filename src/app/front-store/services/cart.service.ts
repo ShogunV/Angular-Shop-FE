@@ -1,13 +1,12 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { ConfirmationService } from 'primeng/api';
+import { ConfirmationService, MessageService } from 'primeng/api';
 import { Message } from 'primeng/api';
 
 import { environment } from '../../../environments/environment';
 import { Product } from './../models/Product.model';
 import { AuthService } from '../services/auth.service';
-import { CartProduct } from 'src/app/admin/components/orders/orders.component';
-import { Router } from '@angular/router';
+import { CartProduct } from '../models/CartProduct.model';
 
 type CheckoutData = {
   completed: boolean;
@@ -24,17 +23,17 @@ export class CartService {
     private http: HttpClient,
     private authService: AuthService,
     private confirmationService: ConfirmationService,
-    private router: Router
+    public messageService: MessageService
   ) {}
 
   addProduct(item: Product) {
     const inCart = this.cart.find((el) => el.id === item.id);
     if (inCart) {
       inCart.quantity++;
-      return this.cart
+      return this.cart;
     } else {
       const newItem = { ...item, quantity: 1 };
-      return this.cart = [...this.cart, newItem];
+      return (this.cart = [...this.cart, newItem]);
     }
   }
 
@@ -90,7 +89,7 @@ export class CartService {
         any expiration date in the future,
         any three digit CVC code.`,
         header: 'Warning',
-        icon: 'fa fa-exclamation-triangle',
+        icon: 'pi pi-exclamation-triangle',
         accept: () => {
           this.loading = true;
           const authToken = localStorage.getItem('token');
@@ -116,23 +115,21 @@ export class CartService {
                 }
                 this.clearCart();
                 this.loading = false;
-                return (this.msgs = [
-                  {
-                    severity: 'error',
-                    summary: 'Failed',
-                    detail: 'Your purchase was not successful! Sorry!!!',
-                  },
-                ]);
+                return this.messageService.add({
+                  key: 'cart-toast',
+                  severity: 'error',
+                  summary: 'Failed',
+                  detail: 'Your purchase was not successful! Sorry!!!',
+                });
               },
               (response) => {
                 this.loading = false;
-                this.msgs = [
-                  {
-                    severity: 'error',
-                    summary: 'Failed',
-                    detail: 'Your purchase was not successful! Sorry!!!',
-                  },
-                ];
+                return this.messageService.add({
+                  key: 'cart-toast',
+                  severity: 'error',
+                  summary: 'Failed',
+                  detail: 'Your purchase was not successful! Sorry!!!',
+                });
               }
             );
         },
@@ -140,13 +137,12 @@ export class CartService {
         reject: () => {},
       });
     } else {
-      this.msgs = [
-        {
-          severity: 'info',
-          summary: 'Info',
-          detail: 'You need to be logged in to continue with your purchase',
-        },
-      ];
+      return this.messageService.add({
+        key: 'cart-toast',
+        severity: 'info',
+        summary: 'Info',
+        detail: 'You need to be logged in to continue with your purchase',
+      });
     }
   }
 }

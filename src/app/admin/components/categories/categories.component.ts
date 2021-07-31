@@ -4,20 +4,16 @@ import { Message } from 'primeng/api';
 
 import { AdminService } from '../../services/admin.service';
 import { CategoryService } from '../../../front-store/services/category.service';
+import { Category } from 'src/app/front-store/models/Category.model';
 
 type CategoryErrors = {
   title: string[];
 };
 
-export type Category = {
-  id: number;
-  title: string;
-};
-
-export interface CategoryResponse {
+export type CategoryResponse = {
   complete: boolean;
   categories: Category[];
-}
+};
 
 @Component({
   selector: 'app-categories',
@@ -152,13 +148,12 @@ export class CategoriesComponent implements OnInit {
             this.loading = false;
             this.categoryService.categories = data['categories'];
           });
-        this.msgs = [
-          {
-            severity: 'info',
-            summary: 'Confirmed',
-            detail: `${category.title} deleted`,
-          },
-        ];
+        return this.messageService.add({
+          key: 'categories-toast',
+          severity: 'info',
+          summary: 'Confirmed',
+          detail: `${category.title} deleted`,
+        });
       },
       reject: () => {
         this.loading = false;

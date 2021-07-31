@@ -3,13 +3,11 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 
 import { environment } from '../../../environments/environment';
 import { AuthService } from '../../front-store/services/auth.service';
-import {
-  Category,
-  CategoryResponse,
-} from '../components/categories/categories.component';
+import { CategoryResponse } from '../components/categories/categories.component';
 import { OrderResponse } from '../components/orders/orders.component';
 import { ProductResponse } from '../components/products/products.component';
 import { UserResponse } from '../components/users/users.component';
+import { Category } from 'src/app/front-store/models/Category.model';
 
 @Injectable()
 export class AdminService {

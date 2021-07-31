@@ -1,14 +1,12 @@
 <div class="container">
   <div class="row" *ngIf="cartService.cart.length > 0">
     <div class="d-flex justify-content-between">
-      <h4 class="text-center">
-        Cart
-      </h4>
+      <h4 class="text-center">Cart</h4>
       <button
         class="btn btn-sm btn-danger h-100 clearCart"
         (click)="removeAllFromCart()"
       >
-      <i class="pi pi-trash"></i>Clear cart
+        <i class="pi pi-trash"></i>Clear cart
       </button>
     </div>
     <table class="table table-striped">
@@ -74,9 +72,7 @@
     <div class="row">
       <div class="d-flex justify-content-between">
         <a class="btn btn-secondary" routerLink="">Back</a>
-        <button class="btn btn-success" (click)="onCheckout()">
-          Checkout
-        </button>
+        <button class="btn btn-success" (click)="onCheckout()">Checkout</button>
       </div>
     </div>
   </div>
@@ -93,6 +89,8 @@
   icon="fa fa-question-circle"
   acceptLabel="OK"
   rejectLabel="Back"
+  [breakpoints]="{ '960px': '75vw', '640px': '100vw' }"
+  [style]="{ width: '50vw' }"
 ></p-confirmDialog>
 
 <p-toast key="cart-toast" position="top-right"></p-toast>

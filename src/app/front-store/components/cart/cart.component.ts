@@ -2,16 +2,14 @@ import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Product } from '../../models/Product.model';
 import { CartService } from '../../services/cart.service';
-import { AuthService } from '../../services/auth.service';
-import { CartProduct } from 'src/app/admin/components/orders/orders.component';
 import { Message } from 'primeng/api';
 import { MessageService } from 'primeng/api';
+import { CartProduct } from '../../models/CartProduct.model';
 
 @Component({
   selector: 'app-cart',
   templateUrl: './cart.component.html',
   styleUrls: ['./cart.component.scss'],
-  providers: [MessageService],
 })
 export class CartComponent implements OnInit {
   private products: CartProduct[] = [];
@@ -20,7 +18,6 @@ export class CartComponent implements OnInit {
 
   constructor(
     public cartService: CartService,
-    private authService: AuthService,
     private route: ActivatedRoute,
     private messageService: MessageService,
     private cdr: ChangeDetectorRef
@@ -74,6 +71,6 @@ export class CartComponent implements OnInit {
   }
 
   onCheckout() {
-    this.cartService.checkout();
+    return this.cartService.checkout();
   }
 }

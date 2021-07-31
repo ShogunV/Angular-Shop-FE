@@ -1,18 +1,12 @@
 import { Component, OnInit } from '@angular/core';
+import { User } from 'src/app/front-store/models/User.model';
 
 import { AdminService } from '../../services/admin.service';
 
-export type User = {
-  id: number;
-  name: string;
-  email: string;
-  role: string;
-};
-
-export interface UserResponse {
+export type UserResponse = {
   complete: boolean;
   users: User[];
-}
+};
 
 @Component({
   selector: 'app-users',
