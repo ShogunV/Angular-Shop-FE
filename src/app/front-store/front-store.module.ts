@@ -4,7 +4,6 @@ import { RouterModule } from '@angular/router';
 import { FormsModule } from '@angular/forms';
 import { ToastModule } from 'primeng/toast';
 import { ConfirmDialogModule } from 'primeng/confirmdialog';
-import { ConfirmationService } from 'primeng/api';
 
 import { FrontStoreRoutingModule } from './front-store-routing.module';
 import { NavbarComponent } from './components/navbar/navbar.component';
@@ -18,7 +17,6 @@ import { PageNotFoundComponent } from './components/page-not-found/page-not-foun
 import { CategoryService } from './services/category.service';
 import { AuthService } from './services/auth.service';
 import { ProductService } from './services/product.service';
-import { CartService } from './services/cart.service';
 import { CategoryPipe } from './pipes/category.pipe';
 import { SearchPipe } from './pipes/search.pipe';
 import { LoaderModule } from '../loader/loader.module';
@@ -48,8 +46,6 @@ import { LoaderModule } from '../loader/loader.module';
     CategoryService,
     AuthService,
     ProductService,
-    CartService,
-    ConfirmationService,
   ],
   exports: [NavbarComponent, FooterComponent, RouterModule],
 })

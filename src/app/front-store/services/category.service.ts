@@ -13,7 +13,7 @@ export class CategoryService {
   constructor(private http: HttpClient) {}
 
   changeCategory(category: string) {
-    this.category = category;
+    return this.category = category;
   }
 
   getCategories() {

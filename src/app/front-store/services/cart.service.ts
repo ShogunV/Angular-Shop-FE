@@ -33,24 +33,24 @@ export class CartService {
       return this.cart;
     } else {
       const newItem = { ...item, quantity: 1 };
-      return (this.cart = [...this.cart, newItem]);
+      return this.cart = [...this.cart, newItem];
     }
   }
 
   deleteOneProduct(item: CartProduct) {
     if (item.quantity <= 1) {
-      this.cart = this.cart.filter((cartItem) => cartItem.id !== item.id);
+      return this.cart = this.cart.filter((cartItem) => cartItem.id !== item.id);
     } else {
-      this.cart[this.cart.indexOf(item)].quantity--;
+      return this.cart[this.cart.indexOf(item)].quantity--;
     }
   }
 
   deleteProducts(item: Product) {
-    this.cart = this.cart.filter((cartItem) => cartItem.id !== item.id);
+    return this.cart = this.cart.filter((cartItem) => cartItem.id !== item.id);
   }
 
   clearCart() {
-    this.cart = [];
+    return this.cart = [];
   }
 
   getProducts(): CartProduct[] {
@@ -83,7 +83,7 @@ export class CartService {
 
   checkout() {
     if (this.authService.isLoggedIn()) {
-      this.confirmationService.confirm({
+      return this.confirmationService.confirm({
         message: `This is a portfolio web store. You CAN NOT buy anything here. DO NOT try to submit your real information.
         For card number use 4242 4242 4242 4242,
         any expiration date in the future,
