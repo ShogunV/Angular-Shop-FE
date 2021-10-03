@@ -12,7 +12,6 @@ import { CartProduct } from '../../models/CartProduct.model';
   styleUrls: ['./cart.component.scss'],
 })
 export class CartComponent implements OnInit {
-  private products: CartProduct[] = [];
   msgs: Message[] = [];
   loading = false;
 
@@ -24,7 +23,6 @@ export class CartComponent implements OnInit {
   ) {}
 
   ngOnInit() {
-    this.products = this.cartService.getProducts();
     this.cartService.msgs = [];
   }
 
@@ -51,23 +49,20 @@ export class CartComponent implements OnInit {
     }
   }
 
-  addToCart(product: Product) {
+  addToCart(product: CartProduct) {
     this.cartService.addProduct(product);
   }
 
   removeOneFromCart(product: CartProduct) {
     this.cartService.deleteOneProduct(product);
-    this.products = this.cartService.getProducts();
   }
 
-  removeFromCart(product: Product) {
+  removeFromCart(product: CartProduct) {
     this.cartService.deleteProducts(product);
-    this.products = this.cartService.getProducts();
   }
 
   removeAllFromCart() {
     this.cartService.clearCart();
-    this.products = this.cartService.getProducts();
   }
 
   onCheckout() {

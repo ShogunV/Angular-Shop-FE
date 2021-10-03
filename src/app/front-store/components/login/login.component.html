@@ -6,9 +6,7 @@
         <div class="card-body">
           <form class="form-horizontal" (ngSubmit)="onLogin(f)" #f="ngForm">
             <div class="mb-3">
-              <label for="email" class="form-label"
-                >E-Mail Address</label
-              >
+              <label for="email" class="form-label">E-Mail Address</label>
 
               <input
                 id="email"
@@ -23,11 +21,13 @@
               />
 
               <div class="invalid-feedback" *ngIf="errors?.email">
-                <strong class="d-block" *ngFor="let item of errors?.email">{{ item }}</strong>
+                <strong class="d-block" *ngFor="let item of errors?.email">{{
+                  item
+                }}</strong>
               </div>
 
               <div class="invalid-feedback" *ngIf="errors?.data">
-                <strong class="d-block" >{{ errors.data }}</strong>
+                <strong class="d-block">{{ errors.data }}</strong>
               </div>
             </div>
 
@@ -46,11 +46,13 @@
               />
 
               <div class="invalid-feedback" *ngIf="errors?.password">
-                <strong class="d-block" *ngFor="let item of errors?.password">{{ errors.password }}</strong>
+                <strong class="d-block" *ngFor="let item of errors?.password">{{
+                  errors.password
+                }}</strong>
               </div>
 
               <div class="invalid-feedback" *ngIf="errors?.data">
-                <strong class="d-block" >{{ errors.data }}</strong>
+                <strong class="d-block">{{ errors.data }}</strong>
               </div>
             </div>
 

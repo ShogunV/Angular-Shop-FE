@@ -26,31 +26,41 @@ export class CartService {
     public messageService: MessageService
   ) {}
 
-  addProduct(item: Product) {
-    const inCart = this.cart.find((el) => el.id === item.id);
+  addProduct(item: CartProduct) {
+    const newCart = [...this.cart];
+    const inCart = newCart.find((el) => el.id === item.id);
     if (inCart) {
       inCart.quantity++;
-      return this.cart;
+      return (this.cart = newCart);
     } else {
-      const newItem = { ...item, quantity: 1 };
-      return this.cart = [...this.cart, newItem];
+      return (this.cart = [...this.cart, item]);
     }
   }
 
   deleteOneProduct(item: CartProduct) {
     if (item.quantity <= 1) {
-      return this.cart = this.cart.filter((cartItem) => cartItem.id !== item.id);
+      return (this.cart = this.cart.filter(
+        (cartItem) => cartItem.id !== item.id
+      ));
     } else {
-      return this.cart[this.cart.indexOf(item)].quantity--;
+      const newCart = [...this.cart];
+      const inCart = newCart.find((cartProduct) => cartProduct.id === item.id);
+      if (!inCart) {
+        return;
+      }
+      inCart.quantity--;
+      return (this.cart = newCart);
     }
   }
 
-  deleteProducts(item: Product) {
-    return this.cart = this.cart.filter((cartItem) => cartItem.id !== item.id);
+  deleteProducts(item: CartProduct) {
+    return (this.cart = this.cart.filter(
+      (cartItem) => cartItem.id !== item.id
+    ));
   }
 
   clearCart() {
-    return this.cart = [];
+    return (this.cart = []);
   }
 
   getProducts(): CartProduct[] {

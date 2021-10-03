@@ -42,11 +42,7 @@ import { LoaderModule } from '../loader/loader.module';
     CategoryPipe,
     SearchPipe,
   ],
-  providers: [
-    CategoryService,
-    AuthService,
-    ProductService,
-  ],
+  providers: [CategoryService, AuthService, ProductService],
   exports: [NavbarComponent, FooterComponent, RouterModule],
 })
 export class FrontStoreModule {}

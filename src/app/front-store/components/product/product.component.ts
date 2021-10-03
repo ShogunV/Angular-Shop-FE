@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 
 import { environment } from '../../../../environments/environment';
+import { CartProduct } from '../../models/CartProduct.model';
+import { Product } from '../../models/Product.model';
 import { CartService } from '../../services/cart.service';
 import { ProductService } from '../../services/product.service';
 
@@ -23,5 +25,10 @@ export class ProductComponent implements OnInit {
   ngOnInit() {
     this.id = +this.route.snapshot.params['id'];
     this.productService.getProduct(this.id);
+  }
+
+  addToCart(product: Product) {
+    const cartProduct: CartProduct = { ...product, quantity: 1 };
+    return this.cartService.addProduct(cartProduct);
   }
 }
