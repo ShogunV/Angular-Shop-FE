@@ -33,7 +33,9 @@ export class CartService {
       inCart.quantity++;
       return (this.cart = newCart);
     } else {
-      return (this.cart = [...this.cart, item]);
+      const { id, title, price, discount } = item;
+      const cartProduct = { id, title, price, discount, quantity: 1 };
+      return (this.cart = [...this.cart, cartProduct]);
     }
   }
 
