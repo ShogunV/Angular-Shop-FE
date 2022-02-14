@@ -20,9 +20,9 @@ import { CategoriesComponent } from './components/categories/categories.componen
 import { OrdersComponent } from './components/orders/orders.component';
 import { ProductsComponent } from './components/products/products.component';
 import { UsersComponent } from './components/users/users.component';
-import { LoaderModule } from '../loader/loader.module';
 import { AdminService } from './services/admin.service';
 import { MessageService } from 'primeng/api';
+import { FrontStoreModule } from '../front-store/front-store.module';
 
 @NgModule({
   imports: [
@@ -35,13 +35,13 @@ import { MessageService } from 'primeng/api';
     ConfirmDialogModule,
     ToastModule,
     AccordionModule,
-    LoaderModule,
     FileUploadModule,
     InputTextModule,
     InputNumberModule,
     InputTextareaModule,
     DropdownModule,
     HttpClientModule,
+    FrontStoreModule
   ],
   exports: [HomeComponent],
   declarations: [

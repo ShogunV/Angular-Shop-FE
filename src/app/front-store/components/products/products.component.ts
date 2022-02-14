@@ -18,7 +18,7 @@ export class ProductsComponent implements OnInit, DoCheck {
   products: Product[] | null = [];
   category: Category | null = null;
   searchText: string = '';
-  url = environment.url;
+  url: string = environment.url;
 
   constructor(
     public productService: ProductService,

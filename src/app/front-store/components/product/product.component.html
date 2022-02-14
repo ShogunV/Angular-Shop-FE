@@ -1,12 +1,7 @@
 <div class="container">
   <div class="row" *ngFor="let product of productService.prods">
     <div class="col-12 col-lg-6 mb-3">
-      <img
-        class="w-100"
-        src="{{ url + 'storage/' }}{{
-          product.image ?? 'images/No_image_available.png'
-        }}"
-      />
+      <img class="w-100" src="{{ url + 'storage/' + product.image }}" />
     </div>
     <div class="col-12 col-lg-6 mb-3">
       <h1>{{ product.title }}</h1>

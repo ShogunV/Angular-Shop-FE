@@ -19,20 +19,20 @@ import { AuthService } from './services/auth.service';
 import { ProductService } from './services/product.service';
 import { CategoryPipe } from './pipes/category.pipe';
 import { SearchPipe } from './pipes/search.pipe';
-import { LoaderModule } from '../loader/loader.module';
+import { LoaderComponent } from './components/loader/loader.component';
 
 @NgModule({
   imports: [
     CommonModule,
     FrontStoreRoutingModule,
     FormsModule,
-    LoaderModule,
     ToastModule,
     ConfirmDialogModule,
   ],
   declarations: [
     NavbarComponent,
     FooterComponent,
+    LoaderComponent,
     LoginComponent,
     RegisterComponent,
     CartComponent,
@@ -43,6 +43,6 @@ import { LoaderModule } from '../loader/loader.module';
     SearchPipe,
   ],
   providers: [CategoryService, AuthService, ProductService],
-  exports: [NavbarComponent, FooterComponent, RouterModule],
+  exports: [NavbarComponent, FooterComponent, LoaderComponent, RouterModule],
 })
 export class FrontStoreModule {}

@@ -36,7 +36,6 @@
             [routerLink]="['/category', category.title | lowercase]"
             name="category"
             routerLinkActive="active"
-            ([ngModel])="(category.title)"
             [routerLinkActiveOptions]="{ exact: true }"
             (click)="categoryService.changeCategory(category.title)"
             >{{ category.title }}</a

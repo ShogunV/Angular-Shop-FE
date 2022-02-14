@@ -10,7 +10,6 @@ import { AppComponent } from './app.component';
 
 import { FrontStoreModule } from './front-store/front-store.module';
 import { AdminModule } from './admin/admin.module';
-import { LoaderModule } from './loader/loader.module';
 import { CartService } from './front-store/services/cart.service';
 
 @NgModule({
@@ -23,7 +22,6 @@ import { CartService } from './front-store/services/cart.service';
     AppRoutingModule,
     FrontStoreModule,
     AdminModule,
-    LoaderModule,
   ],
   providers: [CartService, ConfirmationService],
   bootstrap: [AppComponent],
